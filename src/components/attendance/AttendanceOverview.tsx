@@ -67,7 +67,7 @@ export default function AttendanceOverview() {
         </section>
 
         <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
-          <p className="text-xs font-medium text-white/70">Today's presence</p>
+          <p className="text-xs font-medium text-white/70">Today `&apos;`s presence</p>
 
           <div className="mt-7 flex justify-center">
             <div className="relative flex h-44 w-44 items-center justify-center rounded-full border-[18px] border-white/[0.05]">

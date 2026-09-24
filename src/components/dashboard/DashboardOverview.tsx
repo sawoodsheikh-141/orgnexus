@@ -5,14 +5,21 @@ import AttendanceCard from "./AttendanceCard";
 import PendingRequests from "./PendingRequests";
 import AIInsights from "./AIInsights";
 import RecentActivity from "./RecentActivity";
+import type { AppUser } from "@/lib/types/entities";
+import type { DashboardStats } from "@/lib/data/stats";
 
-export default function DashboardOverview() {
+interface DashboardOverviewProps {
+  user: AppUser;
+  stats: DashboardStats;
+}
+
+export default function DashboardOverview({ user, stats }: DashboardOverviewProps) {
   return (
     <main className="dashboard-grid min-h-full">
       <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
-        <DashboardHeader />
+        <DashboardHeader user={user} />
 
-        <StatCards />
+        <StatCards stats={stats} />
 
         <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1.6fr)_minmax(310px,0.8fr)]">
           <TransportMap />

@@ -1,0 +1,4553 @@
+]633;E;{   echo "================ ORGNEXUS UI AUDIT ================"\x3b   echo\x3b   echo "================ TREE ================"\x3b   tree src/app src/components -I 'node_modules|.next'\x3b   echo\x3b   echo "================ PACKAGE.JSON ================"\x3b   cat package.json\x3b   echo\x3b   echo "================ TSCONFIG ================"\x3b   cat tsconfig.json\x3b   echo\x3b   echo "================ APP ROUTES ================"\x3b   find src/app -name 'page.tsx' -print | sort\x3b   echo\x3b   echo "================ COMPONENTS ================"\x3b   find src/components -type f -name '*.tsx' -print | sort\x3b   echo\x3b   echo "================ LAYOUT ================"\x3b   cat src/app/layout.tsx\x3b   echo\x3b   echo "================ GLOBAL CSS ================"\x3b   cat src/app/globals.css\x3b   echo\x3b   echo "================ APP PAGE ================"\x3b   cat src/app/page.tsx\x3b   echo\x3b   echo "================ ALL COMPONENT FILES ================"\x3b   while IFS= read -r f\x3b do     echo\x3b     echo "================ FILE: $f ================"\x3b     cat "$f"\x3b   done < <(find src/components -type f -name '*.tsx' | sort)\x3b   echo\x3b   echo "================ ALL ROUTE FILES ================"\x3b   while IFS= read -r f\x3b do     echo\x3b     echo "================ FILE: $f ================"\x3b     cat "$f"\x3b   done < <(find src/app -mindepth 2 -name 'page.tsx' | sort)\x3b   echo\x3b   echo "================ TYPESCRIPT CHECK ================"\x3b   npx tsc --noEmit 2>&1\x3b   echo\x3b   echo "================ PRODUCTION BUILD ================"\x3b   npm run build 2>&1\x3b   echo\x3b   echo "================ END AUDIT ================"\x3b } > orgnexus-ui-audit.txt;1256337c-9e52-4de6-93da-d321d7ce893c]633;C================ ORGNEXUS UI AUDIT ================
+
+================ TREE ================
+src/app
+├── ai-assistant
+│   └── page.tsx
+├── attendance
+│   └── page.tsx
+├── departments
+│   └── page.tsx
+├── favicon.ico
+├── globals.css
+├── layout.tsx
+├── page.tsx
+├── reports
+│   └── page.tsx
+├── requests
+│   └── page.tsx
+├── roles
+│   └── page.tsx
+├── settings
+│   └── page.tsx
+├── tasks
+│   └── page.tsx
+├── transport
+│   └── page.tsx
+└── users
+    └── page.tsx
+src/components
+├── ai-assistant
+│   └── AIAssistant.tsx
+├── attendance
+│   └── AttendanceOverview.tsx
+├── dashboard
+│   ├── AIInsights.tsx
+│   ├── AttendanceCard.tsx
+│   ├── DashboardHeader.tsx
+│   ├── DashboardOverview.tsx
+│   ├── PendingRequests.tsx
+│   ├── RecentActivity.tsx
+│   ├── StatCards.tsx
+│   └── TransportMap.tsx
+├── departments
+│   └── DepartmentGrid.tsx
+├── layout
+│   ├── AppShell.tsx
+│   ├── Sidebar.tsx
+│   └── Topbar.tsx
+├── reports
+│   └── ReportOverview.tsx
+├── requests
+│   └── RequestOverview.tsx
+├── roles
+│   └── RolesOverview.tsx
+├── settings
+│   └── SettingsOverview.tsx
+├── tasks
+│   └── TaskOverview.tsx
+├── transport
+│   └── TransportOverview.tsx
+├── ui
+└── users
+    └── EmployeeTable.tsx
+
+25 directories, 35 files
+
+================ PACKAGE.JSON ================
+{
+  "name": "orgnexus",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.42.0",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
+
+================ TSCONFIG ================
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts"
+  ],
+  "exclude": ["node_modules"]
+}
+================ APP ROUTES ================
+src/app/ai-assistant/page.tsx
+src/app/attendance/page.tsx
+src/app/departments/page.tsx
+src/app/page.tsx
+src/app/reports/page.tsx
+src/app/requests/page.tsx
+src/app/roles/page.tsx
+src/app/settings/page.tsx
+src/app/tasks/page.tsx
+src/app/transport/page.tsx
+src/app/users/page.tsx
+
+================ COMPONENTS ================
+src/components/ai-assistant/AIAssistant.tsx
+src/components/attendance/AttendanceOverview.tsx
+src/components/dashboard/AIInsights.tsx
+src/components/dashboard/AttendanceCard.tsx
+src/components/dashboard/DashboardHeader.tsx
+src/components/dashboard/DashboardOverview.tsx
+src/components/dashboard/PendingRequests.tsx
+src/components/dashboard/RecentActivity.tsx
+src/components/dashboard/StatCards.tsx
+src/components/dashboard/TransportMap.tsx
+src/components/departments/DepartmentGrid.tsx
+src/components/layout/AppShell.tsx
+src/components/layout/Sidebar.tsx
+src/components/layout/Topbar.tsx
+src/components/reports/ReportOverview.tsx
+src/components/requests/RequestOverview.tsx
+src/components/roles/RolesOverview.tsx
+src/components/settings/SettingsOverview.tsx
+src/components/tasks/TaskOverview.tsx
+src/components/transport/TransportOverview.tsx
+src/components/users/EmployeeTable.tsx
+
+================ LAYOUT ================
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "OrgNexus",
+  description: "Organisation Management System",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full bg-[#090a0c] text-white">
+        {children}
+      </body>
+    </html>
+  );
+}
+================ GLOBAL CSS ================
+@import "tailwindcss";
+
+:root {
+  --background: #090a0c;
+  --foreground: #f5f5f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #090a0c;
+}
+
+body {
+  margin: 0;
+  background: #090a0c;
+  color: #f5f5f5;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27292d;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3d42;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dashboard-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.map-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.35);
+    opacity: 0.65;
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+================ APP PAGE ================
+import AppShell from "@/components/layout/AppShell";
+import DashboardOverview from "../components/dashboard/DashboardOverview";
+
+export default function Home() {
+  return (
+    <AppShell>
+      <DashboardOverview />
+    </AppShell>
+  );
+}
+================ ALL COMPONENT FILES ================
+
+================ FILE: src/components/ai-assistant/AIAssistant.tsx ================
+"use client";
+
+import {
+  ArrowUp,
+  BarChart3,
+  Bot,
+  ChevronRight,
+  Clock3,
+  FileText,
+  Lightbulb,
+  Sparkles,
+  Users,
+} from "lucide-react";
+import { useState } from "react";
+
+const suggestions = [
+  {
+    icon: Users,
+    title: "Workforce overview",
+    prompt: "Give me a summary of today's workforce status.",
+  },
+  {
+    icon: Clock3,
+    title: "Attendance anomalies",
+    prompt: "Which departments have unusual attendance today?",
+  },
+  {
+    icon: BarChart3,
+    title: "Performance insights",
+    prompt: "What are the biggest operational trends this week?",
+  },
+  {
+    icon: FileText,
+    title: "Pending requests",
+    prompt: "Summarize the requests that need immediate attention.",
+  },
+];
+
+const messages = [
+  {
+    role: "assistant",
+    text: "Good afternoon, Admin. I’m connected to your organisation workspace. I can help you understand workforce activity, attendance, transport, requests and operational performance.",
+  },
+];
+
+export default function AIAssistant() {
+  const [input, setInput] = useState("");
+  const [chat, setChat] = useState(messages);
+
+  function sendMessage(text?: string) {
+    const value = (text ?? input).trim();
+
+    if (!value) return;
+
+    setChat((current) => [
+      ...current,
+      {
+        role: "user",
+        text: value,
+      },
+      {
+        role: "assistant",
+        text: "I’ve noted that request. Once the OrgNexus backend is connected, I’ll be able to analyse your live organisation data and return a contextual answer here.",
+      },
+    ]);
+
+    setInput("");
+  }
+
+  return (
+    <div className="grid min-h-[calc(100vh-180px)] gap-3 xl:grid-cols-[0.72fr_1.28fr]">
+      <section className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113] p-6">
+        <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-white/[0.025] blur-3xl" />
+
+        <div className="relative">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04]">
+            <Sparkles className="h-5 w-5 text-white/60" />
+          </div>
+
+          <p className="mt-7 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/25">
+            OrgNexus Intelligence
+          </p>
+
+          <h2 className="mt-2 max-w-md text-3xl font-semibold tracking-[-0.05em] text-white">
+            Your organisation,
+            <br />
+            understood.
+          </h2>
+
+          <p className="mt-4 max-w-md text-[11px] leading-6 text-white/30">
+            Ask questions about your workforce, operations and organisational
+            data. The assistant will surface patterns, summaries and actionable
+            insights.
+          </p>
+
+          <div className="mt-8 space-y-2">
+            {suggestions.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <button
+                  key={item.title}
+                  onClick={() => sendMessage(item.prompt)}
+                  className="group flex w-full items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.018] p-3 text-left transition hover:border-white/[0.1] hover:bg-white/[0.04]"
+                >
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.035]">
+                    <Icon className="h-3.5 w-3.5 text-white/30 transition group-hover:text-white/60" />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[9px] font-medium text-white/55">
+                      {item.title}
+                    </p>
+
+                    <p className="mt-0.5 truncate text-[8px] text-white/20">
+                      {item.prompt}
+                    </p>
+                  </div>
+
+                  <ChevronRight className="h-3.5 w-3.5 text-white/15 transition group-hover:translate-x-0.5 group-hover:text-white/40" />
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 rounded-xl border border-white/[0.05] bg-white/[0.018] p-4">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="h-3.5 w-3.5 text-white/30" />
+
+              <span className="text-[8px] font-medium uppercase tracking-[0.15em] text-white/30">
+                Available context
+              </span>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {[
+                "Employees",
+                "Departments",
+                "Attendance",
+                "Transport",
+                "Tasks",
+                "Requests",
+                "Reports",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-md border border-white/[0.05] bg-white/[0.025] px-2 py-1 text-[7px] text-white/25"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="flex min-h-[600px] flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113]">
+        <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+          <div className="flex items-center gap-3">
+            <div className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.03]">
+              <Bot className="h-4 w-4 text-white/45" />
+
+              <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-white/70" />
+            </div>
+
+            <div>
+              <p className="text-[10px] font-medium text-white/65">
+                OrgNexus AI
+              </p>
+
+              <p className="mt-0.5 text-[7px] text-white/20">
+                Organisation intelligence
+              </p>
+            </div>
+          </div>
+
+          <span className="rounded-md border border-white/[0.06] bg-white/[0.02] px-2 py-1 text-[7px] text-white/25">
+            PREVIEW
+          </span>
+        </div>
+
+        <div className="flex-1 space-y-5 overflow-y-auto p-5">
+          {chat.map((message, index) => (
+            <div
+              key={index}
+              className={`flex ${
+                message.role === "user"
+                  ? "justify-end"
+                  : "justify-start"
+              }`}
+            >
+              {message.role === "assistant" && (
+                <div className="mr-3 mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-white/[0.04]">
+                  <Sparkles className="h-3 w-3 text-white/40" />
+                </div>
+              )}
+
+              <div
+                className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                  message.role === "user"
+                    ? "bg-white text-black"
+                    : "border border-white/[0.05] bg-white/[0.025] text-white/45"
+                }`}
+              >
+                <p className="text-[10px] leading-5">
+                  {message.text}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="border-t border-white/[0.06] p-4">
+          <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.025] p-1.5 focus-within:border-white/[0.14]">
+            <input
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  sendMessage();
+                }
+              }}
+              placeholder="Ask anything about your organisation..."
+              className="min-w-0 flex-1 bg-transparent px-3 py-2 text-[10px] text-white outline-none placeholder:text-white/20"
+            />
+
+            <button
+              onClick={() => sendMessage()}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-black transition hover:bg-white/85"
+            >
+              <ArrowUp className="h-3.5 w-3.5" />
+            </button>
+          </div>
+
+          <p className="mt-2 text-center text-[7px] text-white/15">
+            AI responses will use live organisation data once the backend is
+            connected.
+          </p>
+        </div>
+      </section>
+    </div>
+  );
+}
+================ FILE: src/components/attendance/AttendanceOverview.tsx ================
+"use client";
+
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Clock3,
+  UserCheck,
+  UserMinus,
+  Users,
+} from "lucide-react";
+
+const departments = [
+  ["Engineering", 94],
+  ["Operations", 91],
+  ["Sales", 87],
+  ["Finance", 90],
+  ["Human Resources", 96],
+  ["Marketing", 84],
+];
+
+export default function AttendanceOverview() {
+  return (
+    <div className="space-y-3">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <Metric icon={Users} label="Workforce" value="1,248" change="+2.4%" />
+        <Metric icon={UserCheck} label="Present today" value="1,106" change="+3.4%" up />
+        <Metric icon={Clock3} label="Late arrivals" value="48" change="-6.2%" up />
+        <Metric icon={UserMinus} label="Absent" value="94" change="+1.8%" />
+      </div>
+
+      <div className="grid gap-3 xl:grid-cols-[1.3fr_0.7fr]">
+        <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+          <div className="mb-7 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-white/70">
+                Department attendance
+              </p>
+              <p className="mt-1 text-[9px] text-white/25">
+                Today · September 9, 2026
+              </p>
+            </div>
+
+            <span className="rounded-full border border-white/[0.07] px-2.5 py-1 text-[8px] text-white/35">
+              88.6% overall
+            </span>
+          </div>
+
+          <div className="space-y-5">
+            {departments.map(([name, percentage]) => (
+              <div key={name}>
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-[10px] text-white/50">{name}</span>
+                  <span className="text-[10px] font-medium text-white/60">
+                    {percentage}%
+                  </span>
+                </div>
+
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                  <div
+                    className="h-full rounded-full bg-white/70"
+                    style={{ width: `${percentage}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+          <p className="text-xs font-medium text-white/70">Today's presence</p>
+
+          <div className="mt-7 flex justify-center">
+            <div className="relative flex h-44 w-44 items-center justify-center rounded-full border-[18px] border-white/[0.05]">
+              <div className="absolute inset-[-18px] rounded-full border-[18px] border-transparent border-l-white/80 border-t-white/80 rotate-[25deg]" />
+              <div className="text-center">
+                <p className="text-3xl font-semibold tracking-[-0.06em]">
+                  88.6%
+                </p>
+                <p className="mt-1 text-[9px] text-white/25">
+                  attendance
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-7 grid grid-cols-3 gap-2">
+            <Presence label="Present" value="1,106" />
+            <Presence label="Late" value="48" />
+            <Presence label="Absent" value="94" />
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function Metric({
+  icon: Icon,
+  label,
+  value,
+  change,
+  up = false,
+}: {
+  icon: typeof Users;
+  label: string;
+  value: string;
+  change: string;
+  up?: boolean;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113] p-4">
+      <Icon className="h-4 w-4 text-white/30" />
+
+      <p className="mt-5 text-[9px] text-white/30">{label}</p>
+
+      <div className="mt-1 flex items-end justify-between">
+        <p className="text-2xl font-semibold tracking-[-0.05em]">{value}</p>
+
+        <span className="flex items-center gap-1 text-[8px] text-white/35">
+          {up ? (
+            <ArrowUpRight className="h-3 w-3" />
+          ) : (
+            <ArrowDownRight className="h-3 w-3" />
+          )}
+          {change}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function Presence({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl bg-white/[0.025] p-3 text-center">
+      <p className="text-sm font-semibold">{value}</p>
+      <p className="mt-1 text-[8px] text-white/25">{label}</p>
+    </div>
+  );
+}
+
+================ FILE: src/components/dashboard/AIInsights.tsx ================
+import {
+  AlertCircle,
+  Bus,
+  Clock3,
+  MessageSquare,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
+
+type InsightData = {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+};
+
+const insights: InsightData[] = [
+  {
+    icon: AlertCircle,
+    title: "Attendance anomaly",
+    text: "Engineering attendance is 6.4% lower than the weekly average.",
+  },
+  {
+    icon: Bus,
+    title: "Transport optimisation",
+    text: "Route B-04 has 18% unused capacity during the morning shift.",
+  },
+  {
+    icon: Clock3,
+    title: "Peak request period",
+    text: "Most employee requests arrive between 10:00 and 11:30 AM.",
+  },
+];
+
+export default function AIInsights() {
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113]">
+      <div className="absolute -right-20 -top-20 h-52 w-52 rounded-full bg-white/[0.035] blur-3xl" />
+
+      <div className="relative border-b border-white/[0.06] px-5 py-4">
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-black">
+            <Sparkles className="h-3.5 w-3.5" />
+          </div>
+
+          <div>
+            <h2 className="text-[12px] font-semibold">
+              AI insights
+            </h2>
+
+            <p className="text-[9px] text-white/30">
+              OrgNexus intelligence
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative space-y-3 p-5">
+        {insights.map((insight) => (
+          <Insight
+            key={insight.title}
+            icon={insight.icon}
+            title={insight.title}
+            text={insight.text}
+          />
+        ))}
+
+        <button className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-white/[0.06] py-2.5 text-[9px] font-medium text-white/55 transition hover:bg-white/[0.09] hover:text-white">
+          <MessageSquare className="h-3 w-3" />
+          Ask AI about your organisation
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function Insight({
+  icon: Icon,
+  title,
+  text,
+}: {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="rounded-xl border border-white/[0.05] bg-white/[0.02] p-3.5">
+      <div className="mb-2 flex items-center gap-2">
+        <Icon
+          className="h-3.5 w-3.5 text-white/45"
+          strokeWidth={1.6}
+        />
+
+        <p className="text-[9px] font-semibold text-white/65">
+          {title}
+        </p>
+      </div>
+
+      <p className="text-[8px] leading-4 text-white/30">
+        {text}
+      </p>
+    </div>
+  );
+}
+================ FILE: src/components/dashboard/AttendanceCard.tsx ================
+import { MoreHorizontal } from "lucide-react";
+
+const departments = [
+  {
+    name: "Engineering",
+    present: 284,
+    total: 312,
+    percentage: 91,
+  },
+  {
+    name: "Operations",
+    present: 236,
+    total: 274,
+    percentage: 86,
+  },
+  {
+    name: "Human Resources",
+    present: 58,
+    total: 64,
+    percentage: 91,
+  },
+  {
+    name: "Finance",
+    present: 83,
+    total: 91,
+    percentage: 91,
+  },
+  {
+    name: "Marketing",
+    present: 71,
+    total: 86,
+    percentage: 83,
+  },
+];
+
+export default function AttendanceCard() {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+      <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+        <div>
+          <h2 className="text-[12px] font-semibold">
+            Today&apos;s attendance
+          </h2>
+
+          <p className="mt-1 text-[9px] text-white/30">
+            September 08, 2026
+          </p>
+        </div>
+
+        <button className="text-white/30 transition hover:text-white">
+          <MoreHorizontal className="h-4 w-4" />
+        </button>
+      </div>
+
+      <div className="p-5">
+        <div className="flex items-center gap-6">
+          <AttendanceRing percentage={88.6} />
+
+          <div className="space-y-3">
+            <AttendanceLegend
+              label="Present"
+              value="1,106"
+              percentage="88.6%"
+            />
+
+            <AttendanceLegend
+              label="Late"
+              value="64"
+              percentage="5.1%"
+            />
+
+            <AttendanceLegend
+              label="Absent"
+              value="51"
+              percentage="4.1%"
+            />
+
+            <AttendanceLegend
+              label="On leave"
+              value="27"
+              percentage="2.2%"
+            />
+          </div>
+        </div>
+
+        <div className="mt-7 border-t border-white/[0.06] pt-5">
+          <div className="mb-3 flex items-center justify-between">
+            <p className="text-[10px] font-medium text-white/55">
+              By department
+            </p>
+
+            <span className="text-[9px] text-white/25">Present</span>
+          </div>
+
+          <div className="space-y-3">
+            {departments.slice(0, 4).map((department) => (
+              <div key={department.name}>
+                <div className="mb-1.5 flex items-center justify-between">
+                  <span className="text-[9px] text-white/40">
+                    {department.name}
+                  </span>
+
+                  <span className="text-[9px] text-white/55">
+                    {department.percentage}%
+                  </span>
+                </div>
+
+                <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
+                  <div
+                    className="h-full rounded-full bg-white/60"
+                    style={{ width: `${department.percentage}%` }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AttendanceRing({ percentage }: { percentage: number }) {
+  const radius = 42;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percentage / 100) * circumference;
+
+  return (
+    <div className="relative h-[110px] w-[110px] shrink-0">
+      <svg
+        className="h-full w-full -rotate-90"
+        viewBox="0 0 100 100"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          r={radius}
+          fill="none"
+          stroke="rgba(255,255,255,0.06)"
+          strokeWidth="7"
+        />
+
+        <circle
+          cx="50"
+          cy="50"
+          r={radius}
+          fill="none"
+          stroke="rgba(255,255,255,0.72)"
+          strokeWidth="7"
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+        />
+      </svg>
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-[20px] font-semibold tracking-[-0.04em]">
+          {percentage}%
+        </span>
+
+        <span className="text-[8px] text-white/25">
+          attendance
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function AttendanceLegend({
+  label,
+  value,
+  percentage,
+}: {
+  label: string;
+  value: string;
+  percentage: string;
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="h-1.5 w-1.5 rounded-full bg-white/40" />
+
+      <div className="min-w-[65px]">
+        <p className="text-[9px] text-white/35">{label}</p>
+      </div>
+
+      <p className="text-[10px] font-medium">{value}</p>
+
+      <p className="text-[8px] text-white/25">{percentage}</p>
+    </div>
+  );
+}
+================ FILE: src/components/dashboard/DashboardHeader.tsx ================
+import { FileText, Plus } from "lucide-react";
+
+export default function DashboardHeader() {
+  return (
+    <div className="mb-7 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+      <div>
+        <div className="mb-2 flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-white" />
+
+          <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+            Overview
+          </span>
+        </div>
+
+        <h1 className="text-[28px] font-semibold tracking-[-0.04em] text-white md:text-[34px]">
+          Good afternoon, Admin.
+        </h1>
+
+        <p className="mt-1.5 text-[12px] text-white/35">
+          Here&apos;s what&apos;s happening across your organisation today.
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <button className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.025] px-3.5 py-2.5 text-[10px] font-medium text-white/65 transition hover:bg-white/[0.06]">
+          <FileText className="h-3.5 w-3.5" />
+          Generate report
+        </button>
+
+        <button className="flex items-center gap-2 rounded-lg bg-white px-3.5 py-2.5 text-[10px] font-semibold text-black transition hover:bg-white/90">
+          <Plus className="h-3.5 w-3.5" />
+          Add employee
+        </button>
+      </div>
+    </div>
+  );
+}
+================ FILE: src/components/dashboard/DashboardOverview.tsx ================
+import DashboardHeader from "./DashboardHeader";
+import StatCards from "./StatCards";
+import TransportMap from "./TransportMap";
+import AttendanceCard from "./AttendanceCard";
+import PendingRequests from "./PendingRequests";
+import AIInsights from "./AIInsights";
+import RecentActivity from "./RecentActivity";
+
+export default function DashboardOverview() {
+  return (
+    <main className="dashboard-grid min-h-full">
+      <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+        <DashboardHeader />
+
+        <StatCards />
+
+        <div className="mt-3 grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1.6fr)_minmax(310px,0.8fr)]">
+          <TransportMap />
+          <AttendanceCard />
+        </div>
+
+        <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-3">
+          <PendingRequests />
+          <AIInsights />
+          <RecentActivity />
+        </div>
+
+        <footer className="flex flex-col items-center justify-between gap-2 py-7 text-[9px] text-white/20 sm:flex-row">
+          <p>OrgNexus · Organisation Management System</p>
+
+          <div className="flex items-center gap-4">
+            <span>System operational</span>
+
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-white/50" />
+              All services online
+            </span>
+          </div>
+        </footer>
+      </div>
+    </main>
+  );
+}
+================ FILE: src/components/dashboard/PendingRequests.tsx ================
+import { FileText } from "lucide-react";
+
+type Request = {
+  type: string;
+  title: string;
+  person: string;
+  time: string;
+};
+
+const requests: Request[] = [
+  {
+    type: "Leave",
+    title: "Annual leave request",
+    person: "Michael Chen",
+    time: "12 min ago",
+  },
+  {
+    type: "Transport",
+    title: "Route change request",
+    person: "David Miller",
+    time: "31 min ago",
+  },
+  {
+    type: "Access",
+    title: "Role permission update",
+    person: "Nadia Thomas",
+    time: "48 min ago",
+  },
+  {
+    type: "Expense",
+    title: "Travel reimbursement",
+    person: "Alex Johnson",
+    time: "1 hr ago",
+  },
+];
+
+export default function PendingRequests() {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+      <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+        <div>
+          <h2 className="text-[12px] font-semibold">
+            Pending requests
+          </h2>
+
+          <p className="mt-1 text-[9px] text-white/30">
+            Requires your attention
+          </p>
+        </div>
+
+        <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-white text-[9px] font-semibold text-black">
+          27
+        </span>
+      </div>
+
+      <div className="divide-y divide-white/[0.05]">
+        {requests.map((request) => (
+          <RequestRow
+            key={request.title}
+            type={request.type}
+            title={request.title}
+            person={request.person}
+            time={request.time}
+          />
+        ))}
+      </div>
+
+      <div className="p-3">
+        <button className="w-full rounded-lg border border-white/[0.07] py-2 text-[9px] font-medium text-white/40 transition hover:bg-white/[0.04] hover:text-white">
+          View all requests
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function RequestRow({
+  type,
+  title,
+  person,
+  time,
+}: {
+  type: string;
+  title: string;
+  person: string;
+  time: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 px-5 py-3.5 transition hover:bg-white/[0.02]">
+      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.04] text-white/40">
+        <FileText className="h-3.5 w-3.5" strokeWidth={1.6} />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[9px] font-medium text-white/65">
+          {title}
+        </p>
+
+        <p className="mt-1 truncate text-[8px] text-white/25">
+          {person} · {time}
+        </p>
+      </div>
+
+      <span className="rounded-md border border-white/[0.06] px-1.5 py-1 text-[7px] text-white/30">
+        {type}
+      </span>
+    </div>
+  );
+}
+================ FILE: src/components/dashboard/RecentActivity.tsx ================
+import {
+  Bus,
+  Check,
+  FileText,
+  UserCheck,
+  type LucideIcon,
+} from "lucide-react";
+
+type Activity = {
+  title: string;
+  person: string;
+  time: string;
+  icon: LucideIcon;
+};
+
+const activities: Activity[] = [
+  {
+    title: "Attendance report generated",
+    person: "Admin",
+    time: "8 min ago",
+    icon: FileText,
+  },
+  {
+    title: "New employee added",
+    person: "HR Department",
+    time: "21 min ago",
+    icon: UserCheck,
+  },
+  {
+    title: "Bus route B-04 started",
+    person: "Transport",
+    time: "34 min ago",
+    icon: Bus,
+  },
+  {
+    title: "Leave request approved",
+    person: "Sarah Wilson",
+    time: "52 min ago",
+    icon: Check,
+  },
+];
+
+export default function RecentActivity() {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+      <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+        <div>
+          <h2 className="text-[12px] font-semibold">
+            Recent activity
+          </h2>
+
+          <p className="mt-1 text-[9px] text-white/30">
+            Latest organisation events
+          </p>
+        </div>
+
+        <button className="text-[9px] text-white/30 hover:text-white">
+          View all
+        </button>
+      </div>
+
+      <div className="p-5">
+        <div className="relative">
+          <div className="absolute bottom-5 left-[13px] top-5 w-px bg-white/[0.06]" />
+
+          <div className="space-y-5">
+            {activities.map((activity) => {
+              const Icon = activity.icon;
+
+              return (
+                <div
+                  key={activity.title}
+                  className="relative flex gap-3"
+                >
+                  <div className="relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/[0.07] bg-[#151619] text-white/45">
+                    <Icon
+                      className="h-3.5 w-3.5"
+                      strokeWidth={1.6}
+                    />
+                  </div>
+
+                  <div className="min-w-0 pt-0.5">
+                    <p className="text-[10px] font-medium text-white/70">
+                      {activity.title}
+                    </p>
+
+                    <p className="mt-1 text-[9px] text-white/25">
+                      {activity.person} · {activity.time}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+================ FILE: src/components/dashboard/StatCards.tsx ================
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Bus,
+  FileText,
+  UserCheck,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+
+type Stat = {
+  label: string;
+  value: string;
+  change: string;
+  positive: boolean;
+  icon: LucideIcon;
+};
+
+const stats: Stat[] = [
+  {
+    label: "Total employees",
+    value: "1,248",
+    change: "+8.2%",
+    positive: true,
+    icon: Users,
+  },
+  {
+    label: "Present today",
+    value: "1,106",
+    change: "+3.4%",
+    positive: true,
+    icon: UserCheck,
+  },
+  {
+    label: "On transport",
+    value: "384",
+    change: "-2.1%",
+    positive: false,
+    icon: Bus,
+  },
+  {
+    label: "Pending requests",
+    value: "27",
+    change: "+5",
+    positive: false,
+    icon: FileText,
+  },
+];
+
+export default function StatCards() {
+  return (
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      {stats.map((stat) => {
+        const Icon = stat.icon;
+
+        return (
+          <div
+            key={stat.label}
+            className="group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113] p-5 transition hover:border-white/[0.12]"
+          >
+            <div className="mb-7 flex items-start justify-between">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.05] text-white/45">
+                <Icon className="h-4 w-4" strokeWidth={1.7} />
+              </div>
+
+              <span
+                className={`flex items-center gap-0.5 text-[9px] font-medium ${
+                  stat.positive ? "text-white/55" : "text-white/35"
+                }`}
+              >
+                {stat.positive ? (
+                  <ArrowUpRight className="h-3 w-3" />
+                ) : (
+                  <ArrowDownRight className="h-3 w-3" />
+                )}
+
+                {stat.change}
+              </span>
+            </div>
+
+            <p className="text-[10px] text-white/35">{stat.label}</p>
+
+            <p className="mt-1 text-[26px] font-semibold tracking-[-0.04em]">
+              {stat.value}
+            </p>
+
+            <div className="absolute -bottom-8 -right-8 h-24 w-24 rounded-full bg-white/[0.02] blur-2xl transition group-hover:bg-white/[0.04]" />
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+================ FILE: src/components/dashboard/TransportMap.tsx ================
+import { ArrowUpRight, Bus, MapPin, Plus } from "lucide-react";
+
+export default function TransportMap() {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113]">
+      <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-[12px] font-semibold">Live transport</h2>
+
+            <span className="flex items-center gap-1.5 rounded-full border border-white/[0.07] bg-white/[0.025] px-2 py-1 text-[8px] text-white/40">
+              <span className="live-dot h-1.5 w-1.5 rounded-full bg-white" />
+              LIVE
+            </span>
+          </div>
+
+          <p className="mt-1 text-[9px] text-white/30">
+            8 active routes · 23 buses currently operating
+          </p>
+        </div>
+
+        <button className="flex items-center gap-1.5 rounded-lg border border-white/[0.07] px-2.5 py-2 text-[9px] text-white/40 transition hover:bg-white/[0.04] hover:text-white/70">
+          View all
+          <ArrowUpRight className="h-3 w-3" />
+        </button>
+      </div>
+
+      <div className="relative h-[390px] overflow-hidden bg-[#111417]">
+        <div className="map-grid absolute inset-0 opacity-50" />
+
+        {/* Fake roads */}
+        <div className="absolute left-[-10%] top-[49%] h-[7px] w-[125%] rotate-[-12deg] bg-white/[0.035]" />
+
+        <div className="absolute left-[18%] top-[-20%] h-[130%] w-[6px] rotate-[19deg] bg-white/[0.03]" />
+
+        <div className="absolute left-[-10%] top-[72%] h-[5px] w-[120%] rotate-[18deg] bg-white/[0.025]" />
+
+        <div className="absolute left-[67%] top-[-10%] h-[120%] w-[4px] rotate-[-28deg] bg-white/[0.025]" />
+
+        {/* Route */}
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox="0 0 1000 500"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M 80 390 C 210 360, 180 250, 320 280 S 520 420, 640 290 S 790 120, 930 145"
+            fill="none"
+            stroke="rgba(255,255,255,0.7)"
+            strokeWidth="3"
+            strokeDasharray="9 8"
+          />
+
+          <path
+            d="M 80 390 C 210 360, 180 250, 320 280 S 520 420, 640 290 S 790 120, 930 145"
+            fill="none"
+            stroke="rgba(255,255,255,0.08)"
+            strokeWidth="12"
+          />
+        </svg>
+
+        <MapLocation
+          label="Main Campus"
+          sub="Central Gate"
+          x="67%"
+          y="58%"
+          main
+        />
+
+        <MapLocation
+          label="Hostel Block"
+          sub="Pickup point"
+          x="28%"
+          y="32%"
+        />
+
+        <MapLocation
+          label="Engineering"
+          sub="Block A"
+          x="78%"
+          y="25%"
+        />
+
+        <BusMarker x="48%" y="63%" route="B-04" />
+        <BusMarker x="75%" y="32%" route="B-07" />
+        <BusMarker x="21%" y="72%" route="B-02" />
+
+        {/* Map controls */}
+        <div className="absolute bottom-4 right-4 flex flex-col overflow-hidden rounded-lg border border-white/[0.08] bg-[#111214]/90 backdrop-blur">
+          <button className="flex h-8 w-8 items-center justify-center text-white/45 transition hover:bg-white/[0.06] hover:text-white">
+            <Plus className="h-3.5 w-3.5" />
+          </button>
+
+          <div className="h-px bg-white/[0.07]" />
+
+          <button className="flex h-8 w-8 items-center justify-center text-white/45 transition hover:bg-white/[0.06] hover:text-white">
+            <span className="text-sm">−</span>
+          </button>
+        </div>
+
+        <div className="absolute left-4 top-4 rounded-lg border border-white/[0.07] bg-[#111214]/90 px-3 py-2 backdrop-blur">
+          <div className="flex items-center gap-2">
+            <MapPin className="h-3.5 w-3.5 text-white/45" />
+
+            <span className="text-[9px] text-white/55">
+              Campus transport network
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MapLocation({
+  label,
+  sub,
+  x,
+  y,
+  main = false,
+}: {
+  label: string;
+  sub: string;
+  x: string;
+  y: string;
+  main?: boolean;
+}) {
+  return (
+    <div
+      className="absolute -translate-x-1/2 -translate-y-1/2"
+      style={{ left: x, top: y }}
+    >
+      <div className="flex flex-col items-center">
+        <div
+          className={`flex h-7 w-7 items-center justify-center rounded-full border ${
+            main
+              ? "border-white/40 bg-white text-black"
+              : "border-white/15 bg-[#191b1e] text-white/45"
+          }`}
+        >
+          <MapPin className="h-3.5 w-3.5" strokeWidth={1.8} />
+        </div>
+
+        <div className="mt-1.5 rounded-md border border-white/[0.06] bg-[#101214]/90 px-2 py-1 text-center backdrop-blur">
+          <p className="whitespace-nowrap text-[8px] font-medium text-white/65">
+            {label}
+          </p>
+
+          <p className="whitespace-nowrap text-[7px] text-white/25">
+            {sub}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BusMarker({
+  x,
+  y,
+  route,
+}: {
+  x: string;
+  y: string;
+  route: string;
+}) {
+  return (
+    <div
+      className="absolute -translate-x-1/2 -translate-y-1/2"
+      style={{ left: x, top: y }}
+    >
+      <div className="relative flex h-8 w-8 items-center justify-center rounded-full border border-white/30 bg-[#17191b] shadow-lg shadow-black/30">
+        <Bus
+          className="h-3.5 w-3.5 text-white/80"
+          strokeWidth={1.8}
+        />
+
+        <span className="absolute -right-8 -top-2 rounded bg-white px-1.5 py-0.5 text-[7px] font-bold text-black">
+          {route}
+        </span>
+      </div>
+
+      <span className="live-dot absolute -right-0.5 -top-0.5 h-1.5 w-1.5 rounded-full bg-white" />
+    </div>
+  );
+}
+================ FILE: src/components/departments/DepartmentGrid.tsx ================
+"use client";
+
+import {
+  ArrowUpRight,
+  Building2,
+  MoreHorizontal,
+  Plus,
+  Users,
+} from "lucide-react";
+
+const departments = [
+  { name: "Engineering", code: "ENG", head: "Michael Chen", employees: 312, growth: "+8.4%" },
+  { name: "Operations", code: "OPS", head: "Nadia Thomas", employees: 274, growth: "+4.1%" },
+  { name: "Sales", code: "SAL", head: "Daniel Brooks", employees: 186, growth: "+11.2%" },
+  { name: "Finance", code: "FIN", head: "David Miller", employees: 142, growth: "+2.8%" },
+  { name: "Human Resources", code: "HR", head: "Sarah Wilson", employees: 64, growth: "+1.6%" },
+  { name: "Marketing", code: "MKT", head: "Olivia Carter", employees: 118, growth: "+6.7%" },
+  { name: "Product", code: "PRD", head: "Alex Johnson", employees: 89, growth: "+9.3%" },
+  { name: "Administration", code: "ADM", head: "James Wilson", employees: 63, growth: "+0.9%" },
+];
+
+export default function DepartmentGrid() {
+  return (
+    <section>
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <p className="text-xs font-medium text-white/70">All departments</p>
+          <p className="mt-1 text-[9px] text-white/25">
+            8 departments · 1,248 employees
+          </p>
+        </div>
+
+        <button className="flex items-center gap-2 rounded-xl bg-white px-3.5 py-2.5 text-[10px] font-semibold text-black transition hover:bg-white/90">
+          <Plus className="h-3.5 w-3.5" />
+          Add department
+        </button>
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {departments.map((department) => (
+          <article
+            key={department.code}
+            className="group rounded-2xl border border-white/[0.07] bg-[#101113] p-4 transition hover:border-white/[0.13] hover:bg-[#121315]"
+          >
+            <div className="mb-6 flex items-start justify-between">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.07] bg-white/[0.035]">
+                <Building2 className="h-4 w-4 text-white/50" />
+              </div>
+
+              <button className="flex h-7 w-7 items-center justify-center rounded-lg text-white/20 transition hover:bg-white/[0.05] hover:text-white">
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="text-[13px] font-semibold text-white/85">
+                  {department.name}
+                </h3>
+                <span className="text-[8px] tracking-[0.12em] text-white/20">
+                  {department.code}
+                </span>
+              </div>
+
+              <p className="mt-1 text-[9px] text-white/30">
+                Head · {department.head}
+              </p>
+            </div>
+
+            <div className="mt-6 flex items-end justify-between border-t border-white/[0.06] pt-4">
+              <div className="flex items-center gap-2">
+                <Users className="h-3.5 w-3.5 text-white/25" />
+                <span className="text-lg font-semibold tracking-[-0.04em]">
+                  {department.employees}
+                </span>
+                <span className="text-[8px] text-white/25">people</span>
+              </div>
+
+              <div className="flex items-center gap-1 text-[8px] text-white/35">
+                <ArrowUpRight className="h-3 w-3" />
+                {department.growth}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+================ FILE: src/components/layout/AppShell.tsx ================
+"use client";
+
+import { ReactNode, useState } from "react";
+import Sidebar from "@/components/layout/Sidebar";
+import Topbar from "@/components/layout/Topbar";
+
+export default function AppShell({ children }: { children: ReactNode }) {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <div className="flex min-h-screen bg-[#090a0c]">
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={() => setCollapsed(!collapsed)}
+      />
+
+      <section className="flex min-w-0 flex-1 flex-col">
+        <Topbar onMenuClick={() => setCollapsed(!collapsed)} />
+
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          {children}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+================ FILE: src/components/layout/Sidebar.tsx ================
+"use client";
+
+import {
+  Activity,
+  Bus,
+  Check,
+  FileText,
+  LayoutDashboard,
+  PanelLeftClose,
+  Settings,
+  ShieldCheck,
+  Sparkles,
+  UserCheck,
+  Users,
+} from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+
+const navigation = [
+  { label: "Dashboard", icon: LayoutDashboard, path: "/" },
+  { label: "Users", icon: Users, path: "/users" },
+  { label: "Departments", icon: PanelLeftClose, path: "/departments" },
+  { label: "Roles & Access", icon: ShieldCheck, path: "/roles" },
+  { label: "Attendance", icon: UserCheck, path: "/attendance" },
+  { label: "Transport", icon: Bus, path: "/transport" },
+  { label: "Tasks", icon: Check, path: "/tasks" },
+  { label: "Requests", icon: FileText, path: "/requests" },
+  { label: "Reports", icon: Activity, path: "/reports" },
+];
+
+interface SidebarProps {
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  return (
+    <aside
+      className={`hidden border-r border-white/[0.07] bg-[#0d0e10] transition-all duration-300 lg:flex lg:flex-col ${
+        collapsed ? "w-[76px]" : "w-[250px]"
+      }`}
+    >
+      {/* BRAND */}
+      <div className="flex h-[76px] items-center border-b border-white/[0.07] px-5">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-black">
+            <span className="text-sm font-bold">O</span>
+          </div>
+
+          {!collapsed && (
+            <div className="overflow-hidden">
+              <p className="truncate text-[15px] font-semibold tracking-[-0.02em]">
+                OrgNexus
+              </p>
+              <p className="truncate text-[10px] uppercase tracking-[0.18em] text-white/35">
+                Organisation OS
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* WORKSPACE */}
+      {!collapsed && (
+        <div className="px-4 pt-5">
+          <button className="flex w-full items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.025] px-3 py-2.5 text-left transition hover:bg-white/[0.05]">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-[11px] font-semibold">
+                AC
+              </div>
+
+              <div className="min-w-0">
+                <p className="truncate text-xs font-medium">Acme Corp</p>
+                <p className="truncate text-[10px] text-white/35">
+                  Main workspace
+                </p>
+              </div>
+            </div>
+
+            <span className="text-[10px] text-white/30">⌄</span>
+          </button>
+        </div>
+      )}
+
+      {/* NAVIGATION */}
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3 pt-6">
+        {!collapsed && (
+          <p className="mb-3 px-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/25">
+            Workspace
+          </p>
+        )}
+
+        {navigation.map((item) => {
+          const Icon = item.icon;
+
+          const active =
+            item.path === "/"
+              ? pathname === "/"
+              : pathname.startsWith(item.path);
+
+          return (
+            <button
+              key={item.label}
+              onClick={() => router.push(item.path)}
+              className={`group flex w-full items-center rounded-xl transition ${
+                collapsed
+                  ? "justify-center px-2 py-3"
+                  : "gap-3 px-3 py-2.5"
+              } ${
+                active
+                  ? "bg-white/[0.09] text-white"
+                  : "text-white/45 hover:bg-white/[0.04] hover:text-white/80"
+              }`}
+            >
+              <Icon
+                className={`h-[17px] w-[17px] shrink-0 ${
+                  active ? "text-white" : "text-white/40"
+                }`}
+                strokeWidth={active ? 2 : 1.7}
+              />
+
+              {!collapsed && (
+                <span className="text-[12px] font-medium">
+                  {item.label}
+                </span>
+              )}
+
+              {item.label === "Requests" && !collapsed && (
+                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-white/10 px-1.5 text-[9px] text-white/55">
+                  27
+                </span>
+              )}
+            </button>
+          );
+        })}
+
+        {!collapsed && (
+          <p className="mb-3 mt-8 px-3 text-[9px] font-semibold uppercase tracking-[0.2em] text-white/25">
+            System
+          </p>
+        )}
+
+        {[
+          { label: "AI Assistant", icon: Sparkles },
+          { label: "Settings", icon: Settings },
+        ].map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <button
+              key={item.label}
+              className={`flex w-full items-center rounded-xl text-white/45 transition hover:bg-white/[0.04] hover:text-white/80 ${
+                collapsed
+                  ? "justify-center px-2 py-3"
+                  : "gap-3 px-3 py-2.5"
+              }`}
+            >
+              <Icon className="h-[17px] w-[17px]" strokeWidth={1.7} />
+
+              {!collapsed && (
+                <span className="text-[12px] font-medium">
+                  {item.label}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* USER */}
+      <div className="border-t border-white/[0.07] p-3">
+        <div
+          className={`flex items-center rounded-xl bg-white/[0.025] ${
+            collapsed ? "justify-center p-2" : "gap-3 p-2.5"
+          }`}
+        >
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-zinc-300 to-zinc-600 text-[10px] font-semibold text-black">
+            AD
+          </div>
+
+          {!collapsed && (
+            <>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-[11px] font-medium">Admin</p>
+                <p className="truncate text-[9px] text-white/30">
+                  Administrator
+                </p>
+              </div>
+
+              <button
+                onClick={onToggle}
+                className="text-[11px] text-white/25 hover:text-white"
+              >
+                ‹
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </aside>
+  );
+}
+================ FILE: src/components/layout/Topbar.tsx ================
+"use client";
+
+import {
+  Bell,
+  CalendarDays,
+  CircleHelp,
+  Menu,
+  Search,
+} from "lucide-react";
+import { useState } from "react";
+
+interface TopbarProps {
+  onMenuClick: () => void;
+}
+
+export default function Topbar({ onMenuClick }: TopbarProps) {
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+  return (
+    <header className="sticky top-0 z-30 flex h-[76px] items-center border-b border-white/[0.07] bg-[#090a0c]/90 px-5 backdrop-blur-xl lg:px-7">
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        <button
+          onClick={onMenuClick}
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-white/45 transition hover:bg-white/[0.05] hover:text-white lg:flex"
+        >
+          <Menu className="h-[17px] w-[17px]" />
+        </button>
+
+        <div className="relative hidden max-w-[340px] flex-1 md:block">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
+
+          <input
+            placeholder="Search anything..."
+            className="h-9 w-full rounded-lg border border-white/[0.07] bg-white/[0.025] pl-9 pr-12 text-[11px] text-white outline-none placeholder:text-white/25 focus:border-white/15"
+          />
+
+          <span className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded border border-white/[0.08] px-1.5 py-0.5 text-[8px] text-white/25">
+            ⌘ K
+          </span>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <button className="hidden items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.025] px-3 py-2 text-[10px] text-white/55 transition hover:bg-white/[0.05] sm:flex">
+          <CalendarDays className="h-3.5 w-3.5" />
+          Sep 08, 2026
+        </button>
+
+        <div className="relative">
+          <button
+            onClick={() => setNotificationsOpen(!notificationsOpen)}
+            className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.025] text-white/45 transition hover:bg-white/[0.05] hover:text-white"
+          >
+            <Bell className="h-[16px] w-[16px]" strokeWidth={1.8} />
+            <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-white" />
+          </button>
+
+          {notificationsOpen && (
+            <div className="absolute right-0 top-11 z-50 w-72 rounded-2xl border border-white/[0.08] bg-[#131416] p-3 shadow-2xl">
+              <div className="mb-2 flex items-center justify-between px-2">
+                <p className="text-xs font-semibold">Notifications</p>
+                <span className="text-[9px] text-white/25">3 new</span>
+              </div>
+
+              <Notification
+                title="3 new leave requests"
+                time="5 min ago"
+              />
+
+              <Notification
+                title="Bus B-04 reached campus"
+                time="18 min ago"
+              />
+
+              <Notification
+                title="Monthly report is ready"
+                time="1 hr ago"
+              />
+            </div>
+          )}
+        </div>
+
+        <button className="hidden h-9 w-9 items-center justify-center rounded-lg border border-white/[0.07] bg-white/[0.025] text-white/45 transition hover:bg-white/[0.05] hover:text-white sm:flex">
+          <CircleHelp className="h-[16px] w-[16px]" strokeWidth={1.8} />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+function Notification({
+  title,
+  time,
+}: {
+  title: string;
+  time: string;
+}) {
+  return (
+    <div className="rounded-xl p-2.5 transition hover:bg-white/[0.04]">
+      <p className="text-[10px] font-medium text-white/65">{title}</p>
+      <p className="mt-1 text-[8px] text-white/25">{time}</p>
+    </div>
+  );
+}
+================ FILE: src/components/reports/ReportOverview.tsx ================
+"use client";
+
+import {
+  Activity,
+  ArrowDownRight,
+  ArrowUpRight,
+  BarChart3,
+  CalendarDays,
+  CheckCircle2,
+  Download,
+  MoreHorizontal,
+  Users,
+} from "lucide-react";
+
+const departments = [
+  { name: "Engineering", employees: 312, attendance: 94, productivity: 91 },
+  { name: "Operations", employees: 274, attendance: 91, productivity: 87 },
+  { name: "Sales", employees: 186, attendance: 87, productivity: 84 },
+  { name: "Finance", employees: 142, attendance: 90, productivity: 93 },
+  { name: "Marketing", employees: 118, attendance: 84, productivity: 82 },
+  { name: "Human Resources", employees: 64, attendance: 96, productivity: 95 },
+];
+
+const activity = [
+  {
+    label: "Employee attendance",
+    value: "88.6%",
+    change: "+2.4%",
+    up: true,
+  },
+  {
+    label: "Task completion",
+    value: "64.7%",
+    change: "+6.8%",
+    up: true,
+  },
+  {
+    label: "Request resolution",
+    value: "91.2%",
+    change: "+3.1%",
+    up: true,
+  },
+  {
+    label: "Transport utilisation",
+    value: "76.4%",
+    change: "-1.7%",
+    up: false,
+  },
+];
+
+export default function ReportOverview() {
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-col justify-between gap-3 rounded-2xl border border-white/[0.07] bg-[#101113] p-4 md:flex-row md:items-center">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.025]">
+            <CalendarDays className="h-4 w-4 text-white/35" />
+          </div>
+
+          <div>
+            <p className="text-[10px] font-medium text-white/65">
+              Reporting period
+            </p>
+
+            <p className="mt-0.5 text-[8px] text-white/25">
+              September 01 — September 08, 2026
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <button className="rounded-lg border border-white/[0.07] bg-white/[0.025] px-3 py-2 text-[8px] text-white/35 hover:bg-white/[0.06] hover:text-white/60">
+            This month
+          </button>
+
+          <button className="flex items-center gap-1.5 rounded-lg border border-white/[0.07] bg-white/[0.025] px-3 py-2 text-[8px] text-white/45 hover:bg-white/[0.06] hover:text-white/70">
+            <Download className="h-3 w-3" />
+            Export
+          </button>
+        </div>
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <Metric
+          icon={Users}
+          label="Workforce"
+          value="1,248"
+          change="+8.2%"
+          up
+        />
+
+        <Metric
+          icon={Activity}
+          label="Attendance"
+          value="88.6%"
+          change="+2.4%"
+          up
+        />
+
+        <Metric
+          icon={CheckCircle2}
+          label="Tasks completed"
+          value="64.7%"
+          change="+6.8%"
+          up
+        />
+
+        <Metric
+          icon={BarChart3}
+          label="Operational score"
+          value="91.4"
+          change="+4.1%"
+          up
+        />
+      </div>
+
+      <div className="grid gap-3 xl:grid-cols-[1.4fr_0.6fr]">
+        <section className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="flex items-center justify-between border-b border-white/[0.06] p-5">
+            <div>
+              <p className="text-xs font-medium text-white/70">
+                Organisation performance
+              </p>
+
+              <p className="mt-1 text-[9px] text-white/25">
+                Department-level operational metrics
+              </p>
+            </div>
+
+            <MoreHorizontal className="h-4 w-4 text-white/20" />
+          </div>
+
+          <div className="overflow-x-auto">
+            <div className="min-w-[620px]">
+              <div className="grid grid-cols-[1.5fr_0.6fr_0.8fr_0.8fr] border-b border-white/[0.05] px-5 py-3 text-[7px] uppercase tracking-[0.14em] text-white/20">
+                <span>Department</span>
+                <span>Employees</span>
+                <span>Attendance</span>
+                <span>Productivity</span>
+              </div>
+
+              <div className="divide-y divide-white/[0.05]">
+                {departments.map((department) => (
+                  <DepartmentRow
+                    key={department.name}
+                    department={department}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="border-b border-white/[0.06] p-5">
+            <p className="text-xs font-medium text-white/70">
+              Key indicators
+            </p>
+
+            <p className="mt-1 text-[9px] text-white/25">
+              Compared with previous period
+            </p>
+          </div>
+
+          <div className="divide-y divide-white/[0.05]">
+            {activity.map((item) => (
+              <Indicator key={item.label} {...item} />
+            ))}
+          </div>
+        </section>
+      </div>
+
+      <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-xs font-medium text-white/70">
+              Attendance trend
+            </p>
+
+            <p className="mt-1 text-[9px] text-white/25">
+              Average daily attendance over the current period
+            </p>
+          </div>
+
+          <span className="text-sm font-semibold text-white/65">
+            88.6%
+          </span>
+        </div>
+
+        <div className="mt-7 flex h-44 items-end gap-2 border-b border-white/[0.05] px-2">
+          {[74, 82, 79, 91, 87, 94, 89, 96].map((height, index) => (
+            <div
+              key={index}
+              className="group relative flex h-full flex-1 items-end"
+            >
+              <div
+                className="w-full rounded-t-md bg-white/[0.12] transition group-hover:bg-white/[0.25]"
+                style={{ height: `${height}%` }}
+              />
+
+              <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[7px] text-white/15">
+                {index + 1}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function DepartmentRow({
+  department,
+}: {
+  department: (typeof departments)[number];
+}) {
+  return (
+    <div className="grid grid-cols-[1.5fr_0.6fr_0.8fr_0.8fr] items-center px-5 py-4">
+      <div>
+        <p className="text-[10px] font-medium text-white/60">
+          {department.name}
+        </p>
+
+        <p className="mt-1 text-[7px] text-white/20">
+          Department performance
+        </p>
+      </div>
+
+      <span className="text-[9px] text-white/40">
+        {department.employees}
+      </span>
+
+      <div className="flex items-center gap-2">
+        <div className="h-1 w-16 overflow-hidden rounded-full bg-white/[0.05]">
+          <div
+            className="h-full rounded-full bg-white/45"
+            style={{ width: `${department.attendance}%` }}
+          />
+        </div>
+
+        <span className="text-[8px] text-white/35">
+          {department.attendance}%
+        </span>
+      </div>
+
+      <div className="flex items-center gap-2">
+        <div className="h-1 w-16 overflow-hidden rounded-full bg-white/[0.05]">
+          <div
+            className="h-full rounded-full bg-white/45"
+            style={{ width: `${department.productivity}%` }}
+          />
+        </div>
+
+        <span className="text-[8px] text-white/35">
+          {department.productivity}%
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function Indicator({
+  label,
+  value,
+  change,
+  up,
+}: {
+  label: string;
+  value: string;
+  change: string;
+  up: boolean;
+}) {
+  const Icon = up ? ArrowUpRight : ArrowDownRight;
+
+  return (
+    <div className="p-5">
+      <p className="text-[9px] text-white/30">{label}</p>
+
+      <div className="mt-2 flex items-end justify-between">
+        <span className="text-xl font-semibold tracking-[-0.04em]">
+          {value}
+        </span>
+
+        <span className="flex items-center gap-1 text-[8px] text-white/30">
+          <Icon className="h-3 w-3" />
+          {change}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function Metric({
+  icon: Icon,
+  label,
+  value,
+  change,
+  up,
+}: {
+  icon: typeof Users;
+  label: string;
+  value: string;
+  change: string;
+  up: boolean;
+}) {
+  const ChangeIcon = up ? ArrowUpRight : ArrowDownRight;
+
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113] p-4">
+      <div className="flex items-center justify-between">
+        <Icon className="h-4 w-4 text-white/30" />
+
+        <span className="flex items-center gap-1 text-[8px] text-white/25">
+          <ChangeIcon className="h-3 w-3" />
+          {change}
+        </span>
+      </div>
+
+      <p className="mt-5 text-[9px] text-white/30">
+        {label}
+      </p>
+
+      <p className="mt-1 text-2xl font-semibold tracking-[-0.05em]">
+        {value}
+      </p>
+    </div>
+  );
+}
+================ FILE: src/components/requests/RequestOverview.tsx ================
+"use client";
+
+import {
+  ArrowUpRight,
+  CalendarDays,
+  Check,
+  Clock3,
+  FileText,
+  MoreHorizontal,
+  Plane,
+  UserRound,
+  X,
+} from "lucide-react";
+
+const requests = [
+  {
+    id: "REQ-1048",
+    employee: "Ayesha Rahman",
+    department: "Human Resources",
+    type: "Leave Request",
+    detail: "Annual leave · Sep 12–14",
+    submitted: "12 min ago",
+    status: "Pending",
+    priority: "Normal",
+    icon: CalendarDays,
+  },
+  {
+    id: "REQ-1047",
+    employee: "Arjun Mehta",
+    department: "Engineering",
+    type: "Work From Home",
+    detail: "WFH · Sep 10",
+    submitted: "34 min ago",
+    status: "Pending",
+    priority: "Normal",
+    icon: UserRound,
+  },
+  {
+    id: "REQ-1046",
+    employee: "Sarah Khan",
+    department: "Operations",
+    type: "Transport Change",
+    detail: "Route B-07 · Morning shift",
+    submitted: "1 hr ago",
+    status: "Pending",
+    priority: "High",
+    icon: ArrowUpRight,
+  },
+  {
+    id: "REQ-1045",
+    employee: "Daniel Joseph",
+    department: "Finance",
+    type: "Expense Claim",
+    detail: "Client visit · ₹8,450",
+    submitted: "2 hrs ago",
+    status: "Approved",
+    priority: "Normal",
+    icon: FileText,
+  },
+  {
+    id: "REQ-1044",
+    employee: "Mariam Ali",
+    department: "Marketing",
+    type: "Leave Request",
+    detail: "Casual leave · Sep 09",
+    submitted: "3 hrs ago",
+    status: "Rejected",
+    priority: "Normal",
+    icon: Plane,
+  },
+];
+
+export default function RequestOverview() {
+  return (
+    <div className="space-y-3">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <Metric
+          icon={Clock3}
+          label="Pending"
+          value="27"
+          detail="Needs review"
+        />
+
+        <Metric
+          icon={Check}
+          label="Approved"
+          value="142"
+          detail="This month"
+        />
+
+        <Metric
+          icon={X}
+          label="Rejected"
+          value="19"
+          detail="This month"
+        />
+
+        <Metric
+          icon={FileText}
+          label="Total requests"
+          value="188"
+          detail="September"
+        />
+      </div>
+
+      <div className="grid gap-3 xl:grid-cols-[1.4fr_0.6fr]">
+        <section className="overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="flex items-center justify-between border-b border-white/[0.06] p-5">
+            <div>
+              <p className="text-xs font-medium text-white/70">
+                Request queue
+              </p>
+
+              <p className="mt-1 text-[9px] text-white/25">
+                Review and manage employee requests
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button className="rounded-lg border border-white/[0.07] bg-white/[0.025] px-3 py-2 text-[8px] text-white/35 transition hover:bg-white/[0.06] hover:text-white/60">
+                All
+              </button>
+
+              <button className="rounded-lg border border-white/[0.07] bg-white/[0.025] px-3 py-2 text-[8px] text-white/35 transition hover:bg-white/[0.06] hover:text-white/60">
+                Pending
+              </button>
+
+              <button className="rounded-lg border border-white/[0.07] bg-white/[0.025] p-2 text-white/25 transition hover:bg-white/[0.06] hover:text-white/60">
+                <MoreHorizontal className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+
+          <div className="divide-y divide-white/[0.05]">
+            {requests.map((request) => (
+              <RequestRow key={request.id} request={request} />
+            ))}
+          </div>
+        </section>
+
+        <div className="space-y-3">
+          <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-medium text-white/70">
+                  Request types
+                </p>
+
+                <p className="mt-1 text-[9px] text-white/25">
+                  Distribution this month
+                </p>
+              </div>
+
+              <MoreHorizontal className="h-4 w-4 text-white/20" />
+            </div>
+
+            <div className="mt-6 space-y-5">
+              <RequestType
+                label="Leave"
+                value="76"
+                percent={40}
+              />
+
+              <RequestType
+                label="Work from home"
+                value="43"
+                percent={23}
+              />
+
+              <RequestType
+                label="Expenses"
+                value="31"
+                percent={16}
+              />
+
+              <RequestType
+                label="Transport"
+                value="21"
+                percent={11}
+              />
+
+              <RequestType
+                label="Other"
+                value="17"
+                percent={9}
+              />
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+            <div>
+              <p className="text-xs font-medium text-white/70">
+                Approval activity
+              </p>
+
+              <p className="mt-1 text-[9px] text-white/25">
+                Recent workflow activity
+              </p>
+            </div>
+
+            <div className="mt-5 space-y-4">
+              <Activity
+                title="Leave request approved"
+                person="Daniel Joseph"
+                time="18 min ago"
+              />
+
+              <Activity
+                title="WFH request submitted"
+                person="Arjun Mehta"
+                time="34 min ago"
+              />
+
+              <Activity
+                title="Expense claim approved"
+                person="Mariam Ali"
+                time="1 hr ago"
+              />
+
+              <Activity
+                title="Transport request escalated"
+                person="Sarah Khan"
+                time="2 hrs ago"
+              />
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RequestRow({
+  request,
+}: {
+  request: (typeof requests)[number];
+}) {
+  const Icon = request.icon;
+
+  return (
+    <div className="group flex items-center gap-4 px-5 py-4 transition hover:bg-white/[0.015]">
+      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.025]">
+        <Icon className="h-4 w-4 text-white/35" />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <p className="truncate text-[10px] font-medium text-white/70">
+            {request.type}
+          </p>
+
+          {request.priority === "High" && (
+            <span className="rounded-md border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 text-[7px] uppercase tracking-wider text-white/50">
+              High
+            </span>
+          )}
+        </div>
+
+        <div className="mt-1 flex flex-wrap items-center gap-2 text-[8px] text-white/25">
+          <span>{request.employee}</span>
+          <span className="text-white/10">•</span>
+          <span>{request.department}</span>
+        </div>
+
+        <p className="mt-1 truncate text-[8px] text-white/20">
+          {request.detail}
+        </p>
+      </div>
+
+      <div className="hidden shrink-0 text-right md:block">
+        <p className="text-[8px] text-white/25">{request.id}</p>
+        <p className="mt-1 text-[8px] text-white/15">
+          {request.submitted}
+        </p>
+      </div>
+
+      <RequestStatus status={request.status} />
+    </div>
+  );
+}
+
+function RequestStatus({ status }: { status: string }) {
+  const pending = status === "Pending";
+  const approved = status === "Approved";
+
+  return (
+    <span
+      className={`shrink-0 rounded-md border px-2 py-1 text-[7px] ${
+        pending
+          ? "border-white/[0.08] bg-white/[0.04] text-white/50"
+          : approved
+            ? "border-white/[0.06] bg-white/[0.025] text-white/35"
+            : "border-white/[0.05] bg-white/[0.015] text-white/20"
+      }`}
+    >
+      {status}
+    </span>
+  );
+}
+
+function RequestType({
+  label,
+  value,
+  percent,
+}: {
+  label: string;
+  value: string;
+  percent: number;
+}) {
+  return (
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-[9px] text-white/40">{label}</span>
+
+        <span className="text-[8px] text-white/25">
+          {value}
+        </span>
+      </div>
+
+      <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.05]">
+        <div
+          className="h-full rounded-full bg-white/50"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function Activity({
+  title,
+  person,
+  time,
+}: {
+  title: string;
+  person: string;
+  time: string;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-white/35" />
+
+      <div className="min-w-0 flex-1">
+        <p className="text-[9px] text-white/50">{title}</p>
+
+        <div className="mt-1 flex items-center justify-between gap-2">
+          <span className="truncate text-[8px] text-white/20">
+            {person}
+          </span>
+
+          <span className="shrink-0 text-[8px] text-white/15">
+            {time}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Metric({
+  icon: Icon,
+  label,
+  value,
+  detail,
+}: {
+  icon: typeof Clock3;
+  label: string;
+  value: string;
+  detail: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113] p-4">
+      <div className="flex items-center justify-between">
+        <Icon className="h-4 w-4 text-white/30" />
+
+        <span className="text-[8px] text-white/20">
+          {detail}
+        </span>
+      </div>
+
+      <p className="mt-5 text-[9px] text-white/30">
+        {label}
+      </p>
+
+      <p className="mt-1 text-2xl font-semibold tracking-[-0.05em]">
+        {value}
+      </p>
+    </div>
+  );
+}
+================ FILE: src/components/roles/RolesOverview.tsx ================
+"use client";
+
+import { useState } from "react";
+import {
+  Shield,
+  Users,
+  UserPlus,
+  MoreHorizontal,
+  Check,
+  Lock,
+  Search,
+  Plus,
+  ChevronRight,
+} from "lucide-react";
+
+type Role = {
+  name: string;
+  description: string;
+  users: number;
+  permissions: number;
+  color: string;
+  system?: boolean;
+};
+
+const roles: Role[] = [
+  {
+    name: "Super Admin",
+    description: "Full system access and organisation control",
+    users: 2,
+    permissions: 42,
+    color: "bg-white",
+    system: true,
+  },
+  {
+    name: "HR Manager",
+    description: "Manage employees, attendance and requests",
+    users: 8,
+    permissions: 31,
+    color: "bg-blue-400",
+  },
+  {
+    name: "Department Head",
+    description: "Manage department employees and operations",
+    users: 14,
+    permissions: 24,
+    color: "bg-violet-400",
+  },
+  {
+    name: "Transport Manager",
+    description: "Manage routes, buses and transport operations",
+    users: 5,
+    permissions: 18,
+    color: "bg-emerald-400",
+  },
+  {
+    name: "Team Lead",
+    description: "Manage assigned teams and tasks",
+    users: 27,
+    permissions: 16,
+    color: "bg-amber-400",
+  },
+  {
+    name: "Employee",
+    description: "Standard employee access",
+    users: 1192,
+    permissions: 9,
+    color: "bg-white/50",
+  },
+];
+
+const permissionGroups = [
+  {
+    title: "Organisation",
+    items: ["View organisation", "Manage departments", "Manage roles"],
+  },
+  {
+    title: "People",
+    items: ["View employees", "Add employees", "Edit employees", "Delete employees"],
+  },
+  {
+    title: "Operations",
+    items: ["View attendance", "Manage transport", "Manage tasks", "Manage requests"],
+  },
+  {
+    title: "Reports",
+    items: ["View reports", "Export reports"],
+  },
+];
+
+export default function RolesOverview() {
+  const [selectedRole, setSelectedRole] = useState("Super Admin");
+  const [search, setSearch] = useState("");
+
+  const filteredRoles = roles.filter(
+    (role) =>
+      role.name.toLowerCase().includes(search.toLowerCase()) ||
+      role.description.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const activeRole =
+    roles.find((role) => role.name === selectedRole) ?? roles[0];
+
+  return (
+    <main className="min-h-full bg-[#090a0c]">
+      <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+        {/* Header */}
+        <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <div className="mb-2 flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] text-white/30">
+              <Shield size={12} />
+              Access control
+            </div>
+
+            <h1 className="text-2xl font-medium tracking-tight text-white">
+              Roles & Access
+            </h1>
+
+            <p className="mt-1 text-xs text-white/35">
+              Control permissions and access across your organisation.
+            </p>
+          </div>
+
+          <button className="flex h-9 items-center justify-center gap-2 rounded-lg bg-white px-4 text-xs font-medium text-black transition hover:bg-white/90">
+            <Plus size={14} />
+            Create role
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div className="mb-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <Metric
+            icon={<Shield size={15} />}
+            label="Total roles"
+            value="6"
+            detail="2 system roles"
+          />
+          <Metric
+            icon={<Users size={15} />}
+            label="Assigned users"
+            value="1,248"
+            detail="100% coverage"
+          />
+          <Metric
+            icon={<Lock size={15} />}
+            label="Permissions"
+            value="42"
+            detail="Across all modules"
+          />
+        </div>
+
+        {/* Main */}
+        <div className="grid grid-cols-1 gap-3 xl:grid-cols-[420px_minmax(0,1fr)]">
+          {/* Role list */}
+          <section className="overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.025]">
+            <div className="border-b border-white/[0.06] p-4">
+              <div className="relative">
+                <Search
+                  size={14}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25"
+                />
+
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search roles..."
+                  className="h-9 w-full rounded-lg border border-white/[0.07] bg-white/[0.025] pl-9 pr-3 text-xs text-white outline-none placeholder:text-white/20 focus:border-white/15"
+                />
+              </div>
+            </div>
+
+            <div className="p-2">
+              {filteredRoles.map((role) => {
+                const active = selectedRole === role.name;
+
+                return (
+                  <button
+                    key={role.name}
+                    onClick={() => setSelectedRole(role.name)}
+                    className={`group flex w-full items-center gap-3 rounded-lg p-3 text-left transition ${
+                      active
+                        ? "bg-white/[0.07]"
+                        : "hover:bg-white/[0.035]"
+                    }`}
+                  >
+                    <span
+                      className={`h-8 w-8 shrink-0 rounded-lg ${role.color} flex items-center justify-center`}
+                    >
+                      <Shield
+                        size={14}
+                        className={
+                          role.color === "bg-white"
+                            ? "text-black"
+                            : "text-black/70"
+                        }
+                      />
+                    </span>
+
+                    <span className="min-w-0 flex-1">
+                      <span className="flex items-center gap-2">
+                        <span className="truncate text-xs font-medium text-white">
+                          {role.name}
+                        </span>
+
+                        {role.system && (
+                          <span className="rounded-full border border-white/10 px-1.5 py-0.5 text-[8px] uppercase tracking-wider text-white/30">
+                            System
+                          </span>
+                        )}
+                      </span>
+
+                      <span className="mt-0.5 block truncate text-[10px] text-white/30">
+                        {role.users} users · {role.permissions} permissions
+                      </span>
+                    </span>
+
+                    <ChevronRight
+                      size={14}
+                      className={`transition ${
+                        active
+                          ? "text-white/50"
+                          : "text-white/10 group-hover:text-white/30"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Permission panel */}
+          <section className="overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.025]">
+            <div className="flex flex-col justify-between gap-4 border-b border-white/[0.06] p-5 sm:flex-row sm:items-center">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white">
+                  <Shield size={17} className="text-black" />
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-sm font-medium text-white">
+                      {activeRole.name}
+                    </h2>
+
+                    {activeRole.system && (
+                      <span className="rounded-full bg-white/[0.07] px-2 py-0.5 text-[8px] uppercase tracking-wider text-white/35">
+                        Protected
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="mt-0.5 text-[10px] text-white/30">
+                    {activeRole.description}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button className="flex h-8 items-center gap-2 rounded-lg border border-white/[0.08] px-3 text-[10px] text-white/50 transition hover:bg-white/[0.04] hover:text-white">
+                  <Users size={13} />
+                  {activeRole.users} users
+                </button>
+
+                <button className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] text-white/40 transition hover:bg-white/[0.04] hover:text-white">
+                  <MoreHorizontal size={15} />
+                </button>
+              </div>
+            </div>
+
+            <div className="p-5">
+              <div className="mb-5 flex items-center justify-between">
+                <div>
+                  <h3 className="text-xs font-medium text-white">
+                    Permissions
+                  </h3>
+                  <p className="mt-1 text-[10px] text-white/25">
+                    Configure what this role can access.
+                  </p>
+                </div>
+
+                <span className="text-[10px] text-white/30">
+                  {activeRole.permissions} enabled
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                {permissionGroups.map((group) => (
+                  <div
+                    key={group.title}
+                    className="overflow-hidden rounded-lg border border-white/[0.06]"
+                  >
+                    <div className="border-b border-white/[0.05] bg-white/[0.025] px-4 py-3">
+                      <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40">
+                        {group.title}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 divide-y divide-white/[0.05] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+                      {group.items.map((permission) => (
+                        <div
+                          key={permission}
+                          className="flex items-center justify-between px-4 py-3"
+                        >
+                          <span className="text-[11px] text-white/55">
+                            {permission}
+                          </span>
+
+                          <span className="flex h-5 w-5 items-center justify-center rounded-md bg-white/[0.07]">
+                            <Check size={11} className="text-white/70" />
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-5 flex items-center justify-between rounded-lg border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <UserPlus size={14} className="text-white/30" />
+                  <span className="text-[10px] text-white/40">
+                    {activeRole.users} users have this role
+                  </span>
+                </div>
+
+                <button className="text-[10px] font-medium text-white/60 transition hover:text-white">
+                  Manage users →
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer className="flex flex-col items-center justify-between gap-2 py-7 text-[9px] text-white/20 sm:flex-row">
+          <p>OrgNexus · Organisation Management System</p>
+
+          <div className="flex items-center gap-4">
+            <span>Access control active</span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-white/50" />
+              All services online
+            </span>
+          </div>
+        </footer>
+      </div>
+    </main>
+  );
+}
+
+function Metric({
+  icon,
+  label,
+  value,
+  detail,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  detail: string;
+}) {
+  return (
+    <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] p-4">
+      <div className="mb-3 flex items-center gap-2 text-white/30">
+        {icon}
+        <span className="text-[10px] uppercase tracking-[0.14em]">
+          {label}
+        </span>
+      </div>
+
+      <div className="flex items-end justify-between">
+        <span className="text-xl font-medium tracking-tight text-white">
+          {value}
+        </span>
+
+        <span className="text-[9px] text-white/25">{detail}</span>
+      </div>
+    </div>
+  );
+}
+================ FILE: src/components/settings/SettingsOverview.tsx ================
+"use client";
+
+import {
+  Bell,
+  Building2,
+  ChevronRight,
+  Globe2,
+  Lock,
+  Palette,
+  Save,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react";
+
+const sections = [
+  {
+    icon: Building2,
+    title: "Organisation",
+    description: "Manage your organisation profile and workspace details.",
+  },
+  {
+    icon: UserRound,
+    title: "Account",
+    description: "Personal information and administrator preferences.",
+  },
+  {
+    icon: Bell,
+    title: "Notifications",
+    description: "Control alerts, reminders and workflow notifications.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Security & Access",
+    description: "Authentication, sessions and access policies.",
+  },
+];
+
+export default function SettingsOverview() {
+  return (
+    <div className="grid gap-3 xl:grid-cols-[0.72fr_1.28fr]">
+      <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+        <div>
+          <p className="text-xs font-medium text-white/70">
+            Settings
+          </p>
+
+          <p className="mt-1 text-[9px] text-white/25">
+            Configure your OrgNexus workspace
+          </p>
+        </div>
+
+        <div className="mt-5 space-y-1">
+          {sections.map((section, index) => {
+            const Icon = section.icon;
+
+            return (
+              <button
+                key={section.title}
+                className={`group flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:bg-white/[0.035] ${
+                  index === 0 ? "bg-white/[0.04]" : ""
+                }`}
+              >
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.05] bg-white/[0.02]">
+                  <Icon className="h-3.5 w-3.5 text-white/30 group-hover:text-white/55" />
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <p className="text-[9px] font-medium text-white/55">
+                    {section.title}
+                  </p>
+
+                  <p className="mt-0.5 text-[7px] leading-4 text-white/20">
+                    {section.description}
+                  </p>
+                </div>
+
+                <ChevronRight className="h-3 w-3 text-white/15" />
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <div className="space-y-3">
+        <section className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="border-b border-white/[0.06] p-5">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.04]">
+                <Building2 className="h-4 w-4 text-white/35" />
+              </div>
+
+              <div>
+                <p className="text-xs font-medium text-white/70">
+                  Organisation profile
+                </p>
+
+                <p className="mt-1 text-[9px] text-white/25">
+                  Basic workspace information
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 p-5 md:grid-cols-2">
+            <Field label="Organisation name" value="Acme Corporation" />
+            <Field label="Workspace ID" value="ACME-ORG-001" />
+            <Field label="Administrator" value="Admin" />
+            <Field label="Timezone" value="Asia/Kolkata" />
+          </div>
+
+          <div className="flex justify-end border-t border-white/[0.05] p-4">
+            <button className="flex items-center gap-1.5 rounded-lg bg-white px-3 py-2 text-[8px] font-medium text-black transition hover:bg-white/85">
+              <Save className="h-3 w-3" />
+              Save changes
+            </button>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="border-b border-white/[0.06] p-5">
+            <p className="text-xs font-medium text-white/70">
+              Preferences
+            </p>
+
+            <p className="mt-1 text-[9px] text-white/25">
+              Control your workspace behaviour
+            </p>
+          </div>
+
+          <div className="divide-y divide-white/[0.05]">
+            <ToggleRow
+              icon={Bell}
+              title="Email notifications"
+              description="Receive important organisation alerts by email."
+              enabled
+            />
+
+            <ToggleRow
+              icon={Globe2}
+              title="Automatic timezone"
+              description="Use your browser timezone for date and time displays."
+              enabled
+            />
+
+            <ToggleRow
+              icon={Palette}
+              title="Compact interface"
+              description="Reduce spacing across tables and operational views."
+              enabled={false}
+            />
+
+            <ToggleRow
+              icon={Lock}
+              title="Session protection"
+              description="Require re-authentication for sensitive actions."
+              enabled
+            />
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function Field({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-[8px] uppercase tracking-[0.12em] text-white/20">
+        {label}
+      </label>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2.5 text-[9px] text-white/45">
+        {value}
+      </div>
+    </div>
+  );
+}
+
+function ToggleRow({
+  icon: Icon,
+  title,
+  description,
+  enabled,
+}: {
+  icon: typeof Bell;
+  title: string;
+  description: string;
+  enabled: boolean;
+}) {
+  return (
+    <div className="flex items-center gap-3 p-4">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.025]">
+        <Icon className="h-3.5 w-3.5 text-white/25" />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <p className="text-[9px] font-medium text-white/50">
+          {title}
+        </p>
+
+        <p className="mt-0.5 text-[7px] leading-4 text-white/20">
+          {description}
+        </p>
+      </div>
+
+      <div
+        className={`relative h-5 w-9 shrink-0 rounded-full border transition ${
+          enabled
+            ? "border-white/20 bg-white/15"
+            : "border-white/[0.07] bg-white/[0.025]"
+        }`}
+      >
+        <span
+          className={`absolute top-1 h-3 w-3 rounded-full transition ${
+            enabled
+              ? "left-5 bg-white"
+              : "left-1 bg-white/25"
+          }`}
+        />
+      </div>
+    </div>
+  );
+}
+================ FILE: src/components/tasks/TaskOverview.tsx ================
+"use client";
+
+import {
+  CheckCircle2,
+  Circle,
+  Clock3,
+  Flag,
+  ListTodo,
+  MoreHorizontal,
+  Plus,
+  UserRound,
+} from "lucide-react";
+
+const tasks = [
+  {
+    title: "Review Q3 attendance report",
+    project: "Operations",
+    assignee: "Sarah Khan",
+    priority: "High",
+    status: "In progress",
+    due: "Today",
+    progress: 72,
+  },
+  {
+    title: "Update employee transport routes",
+    project: "Transport",
+    assignee: "Arjun Mehta",
+    priority: "Medium",
+    status: "In progress",
+    due: "Sep 10",
+    progress: 48,
+  },
+  {
+    title: "Prepare onboarding documents",
+    project: "Human Resources",
+    assignee: "Ayesha Rahman",
+    priority: "Medium",
+    status: "Todo",
+    due: "Sep 11",
+    progress: 0,
+  },
+  {
+    title: "Audit department access roles",
+    project: "IT Administration",
+    assignee: "Daniel Joseph",
+    priority: "High",
+    status: "Todo",
+    due: "Sep 12",
+    progress: 0,
+  },
+  {
+    title: "Finalize monthly payroll",
+    project: "Finance",
+    assignee: "Mariam Ali",
+    priority: "Low",
+    status: "Completed",
+    due: "Sep 07",
+    progress: 100,
+  },
+];
+
+export default function TaskOverview() {
+  return (
+    <div className="space-y-3">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <Metric
+          icon={ListTodo}
+          label="Total tasks"
+          value="184"
+          detail="+12 this week"
+        />
+        <Metric
+          icon={Clock3}
+          label="In progress"
+          value="47"
+          detail="25.5% of total"
+        />
+        <Metric
+          icon={CheckCircle2}
+          label="Completed"
+          value="119"
+          detail="64.7% of total"
+        />
+        <Metric
+          icon={Flag}
+          label="Overdue"
+          value="18"
+          detail="Needs attention"
+        />
+      </div>
+
+      <div className="grid gap-3 xl:grid-cols-[1.35fr_0.65fr]">
+        <section className="overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="flex items-center justify-between border-b border-white/[0.06] p-5">
+            <div>
+              <p className="text-xs font-medium text-white/70">
+                Task overview
+              </p>
+              <p className="mt-1 text-[9px] text-white/25">
+                Recent organisation tasks
+              </p>
+            </div>
+
+            <button className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-[9px] font-medium text-white/55 transition hover:bg-white/[0.07] hover:text-white">
+              <Plus className="h-3 w-3" />
+              New task
+            </button>
+          </div>
+
+          <div className="divide-y divide-white/[0.05]">
+            {tasks.map((task) => (
+              <TaskRow key={task.title} task={task} />
+            ))}
+          </div>
+        </section>
+
+        <div className="space-y-3">
+          <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-medium text-white/70">
+                  Completion
+                </p>
+                <p className="mt-1 text-[9px] text-white/25">
+                  Overall task progress
+                </p>
+              </div>
+
+              <span className="text-xl font-semibold tracking-[-0.04em]">
+                64.7%
+              </span>
+            </div>
+
+            <div className="mt-6 h-2 overflow-hidden rounded-full bg-white/[0.06]">
+              <div
+                className="h-full rounded-full bg-white"
+                style={{ width: "64.7%" }}
+              />
+            </div>
+
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              <ProgressStat label="Todo" value="18%" />
+              <ProgressStat label="Active" value="25%" />
+              <ProgressStat label="Done" value="65%" />
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-white/[0.07] bg-[#101113] p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-medium text-white/70">
+                  Workload
+                </p>
+                <p className="mt-1 text-[9px] text-white/25">
+                  Tasks by team
+                </p>
+              </div>
+
+              <MoreHorizontal className="h-4 w-4 text-white/25" />
+            </div>
+
+            <div className="mt-5 space-y-4">
+              <Workload label="Engineering" value={42} percent={82} />
+              <Workload label="Operations" value={31} percent={64} />
+              <Workload label="Human Resources" value={18} percent={44} />
+              <Workload label="Finance" value={12} percent={31} />
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TaskRow({
+  task,
+}: {
+  task: (typeof tasks)[number];
+}) {
+  const completed = task.status === "Completed";
+
+  return (
+    <div className="group flex items-center gap-4 px-5 py-4 transition hover:bg-white/[0.015]">
+      <div className="shrink-0">
+        {completed ? (
+          <CheckCircle2 className="h-4 w-4 text-white/70" />
+        ) : (
+          <Circle className="h-4 w-4 text-white/20" />
+        )}
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-2">
+          <p
+            className={`truncate text-[11px] font-medium ${
+              completed ? "text-white/35 line-through" : "text-white/75"
+            }`}
+          >
+            {task.title}
+          </p>
+
+          <Priority priority={task.priority} />
+        </div>
+
+        <div className="mt-1.5 flex flex-wrap items-center gap-3 text-[8px] text-white/25">
+          <span>{task.project}</span>
+
+          <span className="flex items-center gap-1">
+            <UserRound className="h-2.5 w-2.5" />
+            {task.assignee}
+          </span>
+
+          <span>Due {task.due}</span>
+        </div>
+      </div>
+
+      <div className="hidden w-24 shrink-0 md:block">
+        <div className="mb-1.5 flex justify-between text-[8px] text-white/25">
+          <span>Progress</span>
+          <span>{task.progress}%</span>
+        </div>
+
+        <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
+          <div
+            className="h-full rounded-full bg-white/60"
+            style={{ width: `${task.progress}%` }}
+          />
+        </div>
+      </div>
+
+      <Status status={task.status} />
+    </div>
+  );
+}
+
+function Priority({ priority }: { priority: string }) {
+  const opacity =
+    priority === "High"
+      ? "text-white/70"
+      : priority === "Medium"
+        ? "text-white/45"
+        : "text-white/25";
+
+  return (
+    <span className={`flex items-center gap-1 text-[7px] ${opacity}`}>
+      <span className="h-1 w-1 rounded-full bg-current" />
+      {priority}
+    </span>
+  );
+}
+
+function Status({ status }: { status: string }) {
+  return (
+    <span className="shrink-0 rounded-md border border-white/[0.07] bg-white/[0.025] px-2 py-1 text-[7px] text-white/35">
+      {status}
+    </span>
+  );
+}
+
+function Metric({
+  icon: Icon,
+  label,
+  value,
+  detail,
+}: {
+  icon: typeof ListTodo;
+  label: string;
+  value: string;
+  detail: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113] p-4">
+      <div className="flex items-center justify-between">
+        <Icon className="h-4 w-4 text-white/30" />
+        <span className="text-[8px] text-white/20">{detail}</span>
+      </div>
+
+      <p className="mt-5 text-[9px] text-white/30">{label}</p>
+
+      <p className="mt-1 text-2xl font-semibold tracking-[-0.05em]">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function ProgressStat({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-xl border border-white/[0.05] bg-white/[0.02] p-3">
+      <p className="text-[8px] text-white/25">{label}</p>
+      <p className="mt-1 text-sm font-semibold">{value}</p>
+    </div>
+  );
+}
+
+function Workload({
+  label,
+  value,
+  percent,
+}: {
+  label: string;
+  value: number;
+  percent: number;
+}) {
+  return (
+    <div>
+      <div className="mb-1.5 flex items-center justify-between">
+        <span className="text-[9px] text-white/45">{label}</span>
+        <span className="text-[8px] text-white/25">{value} tasks</span>
+      </div>
+
+      <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.05]">
+        <div
+          className="h-full rounded-full bg-white/50"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+================ FILE: src/components/transport/TransportOverview.tsx ================
+"use client";
+
+import {
+  Bus,
+  CircleDot,
+  Clock3,
+  MapPin,
+  Navigation,
+  Users,
+} from "lucide-react";
+
+const buses = [
+  { id: "B-04", route: "North Campus → Main Campus", status: "En route", eta: "08 min", passengers: 42, speed: "34 km/h" },
+  { id: "B-07", route: "Hostel Block → Main Campus", status: "En route", eta: "14 min", passengers: 31, speed: "28 km/h" },
+  { id: "B-02", route: "East Gate → Engineering", status: "Arriving", eta: "03 min", passengers: 38, speed: "21 km/h" },
+  { id: "B-11", route: "South Block → Main Campus", status: "Idle", eta: "—", passengers: 0, speed: "0 km/h" },
+];
+
+export default function TransportOverview() {
+  return (
+    <div className="space-y-3">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        <Metric icon={Bus} label="Active vehicles" value="18" />
+        <Metric icon={Navigation} label="On route" value="14" />
+        <Metric icon={Users} label="Passengers today" value="384" />
+        <Metric icon={Clock3} label="Avg. delay" value="04 min" />
+      </div>
+
+      <div className="grid gap-3 xl:grid-cols-[1.45fr_0.55fr]">
+        <section className="overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="flex items-center justify-between border-b border-white/[0.06] p-5">
+            <div>
+              <p className="text-xs font-medium text-white/70">Live fleet</p>
+              <p className="mt-1 text-[9px] text-white/25">
+                Real-time transport overview
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 text-[8px] text-white/30">
+              <span className="live-dot h-1.5 w-1.5 rounded-full bg-white" />
+              LIVE
+            </div>
+          </div>
+
+          <div className="map-grid relative h-[390px] overflow-hidden bg-[#0c0d0f]">
+            <div className="absolute left-[8%] top-[18%] h-[2px] w-[84%] rotate-[8deg] bg-white/[0.05]" />
+            <div className="absolute left-[18%] top-[48%] h-[2px] w-[70%] -rotate-[16deg] bg-white/[0.05]" />
+            <div className="absolute left-[42%] top-[5%] h-[88%] w-[2px] rotate-[18deg] bg-white/[0.05]" />
+            <div className="absolute left-[15%] top-[73%] h-[2px] w-[75%] rotate-[4deg] bg-white/[0.05]" />
+
+            <div className="absolute left-[18%] top-[30%] flex flex-col items-center">
+              <MapPin className="h-5 w-5 fill-white text-white" />
+              <span className="mt-1 rounded bg-[#0c0d0f]/90 px-2 py-1 text-[8px] text-white/45">
+                North Campus
+              </span>
+            </div>
+
+            <div className="absolute left-[51%] top-[52%] flex flex-col items-center">
+              <MapPin className="h-5 w-5 fill-white text-white" />
+              <span className="mt-1 rounded bg-[#0c0d0f]/90 px-2 py-1 text-[8px] text-white/45">
+                Main Campus
+              </span>
+            </div>
+
+            <div className="absolute right-[17%] top-[26%] flex flex-col items-center">
+              <MapPin className="h-5 w-5 fill-white text-white" />
+              <span className="mt-1 rounded bg-[#0c0d0f]/90 px-2 py-1 text-[8px] text-white/45">
+                Hostel Block
+              </span>
+            </div>
+
+            <div className="absolute left-[31%] top-[43%]">
+              <BusMarker id="B-04" />
+            </div>
+
+            <div className="absolute right-[28%] top-[38%]">
+              <BusMarker id="B-07" />
+            </div>
+
+            <div className="absolute left-[63%] top-[62%]">
+              <BusMarker id="B-02" />
+            </div>
+
+            <div className="absolute bottom-4 left-4 rounded-xl border border-white/[0.07] bg-[#101113]/90 px-3 py-2 backdrop-blur-md">
+              <p className="text-[8px] uppercase tracking-[0.15em] text-white/25">
+                Network status
+              </p>
+              <p className="mt-1 text-[10px] text-white/60">
+                All routes operational
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/[0.07] bg-[#101113]">
+          <div className="border-b border-white/[0.06] p-5">
+            <p className="text-xs font-medium text-white/70">Fleet status</p>
+            <p className="mt-1 text-[9px] text-white/25">
+              Current vehicle activity
+            </p>
+          </div>
+
+          <div className="divide-y divide-white/[0.05]">
+            {buses.map((bus) => (
+              <div key={bus.id} className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/[0.05]">
+                      <Bus className="h-4 w-4 text-white/40" />
+                    </div>
+
+                    <div>
+                      <p className="text-[10px] font-semibold">{bus.id}</p>
+                      <p className="mt-0.5 text-[8px] text-white/25">
+                        {bus.status}
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="text-xs font-semibold">{bus.eta}</span>
+                </div>
+
+                <p className="mt-3 truncate text-[9px] text-white/35">
+                  {bus.route}
+                </p>
+
+                <div className="mt-3 flex gap-4 text-[8px] text-white/25">
+                  <span>{bus.passengers} passengers</span>
+                  <span>{bus.speed}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function BusMarker({ id }: { id: string }) {
+  return (
+    <div className="flex items-center gap-1.5 rounded-lg border border-white/[0.1] bg-[#151619] px-2 py-1.5 shadow-xl">
+      <CircleDot className="h-3 w-3 text-white/60" />
+      <span className="text-[8px] font-semibold">{id}</span>
+    </div>
+  );
+}
+
+function Metric({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: typeof Bus;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/[0.07] bg-[#101113] p-4">
+      <Icon className="h-4 w-4 text-white/30" />
+      <p className="mt-5 text-[9px] text-white/30">{label}</p>
+      <p className="mt-1 text-2xl font-semibold tracking-[-0.05em]">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+================ FILE: src/components/users/EmployeeTable.tsx ================
+"use client";
+
+import {
+  ChevronLeft,
+  ChevronRight,
+  Filter,
+  MoreHorizontal,
+  Plus,
+  Search,
+} from "lucide-react";
+import { useMemo, useState } from "react";
+
+type Employee = {
+  name: string;
+  email: string;
+  department: string;
+  role: string;
+  status: "Active" | "On leave" | "Inactive";
+  joined: string;
+};
+
+const employees: Employee[] = [
+  {
+    name: "Aarav Sharma",
+    email: "aarav.sharma@acme.com",
+    department: "Engineering",
+    role: "Senior Developer",
+    status: "Active",
+    joined: "Mar 12, 2023",
+  },
+  {
+    name: "Sarah Wilson",
+    email: "sarah.wilson@acme.com",
+    department: "Human Resources",
+    role: "HR Manager",
+    status: "Active",
+    joined: "Jun 08, 2022",
+  },
+  {
+    name: "Michael Chen",
+    email: "michael.chen@acme.com",
+    department: "Engineering",
+    role: "Tech Lead",
+    status: "Active",
+    joined: "Jan 17, 2021",
+  },
+  {
+    name: "Nadia Thomas",
+    email: "nadia.thomas@acme.com",
+    department: "Operations",
+    role: "Operations Manager",
+    status: "On leave",
+    joined: "Aug 24, 2023",
+  },
+  {
+    name: "David Miller",
+    email: "david.miller@acme.com",
+    department: "Finance",
+    role: "Financial Analyst",
+    status: "Active",
+    joined: "Nov 03, 2024",
+  },
+  {
+    name: "Alex Johnson",
+    email: "alex.johnson@acme.com",
+    department: "Operations",
+    role: "Operations Executive",
+    status: "Active",
+    joined: "Feb 19, 2024",
+  },
+  {
+    name: "Emily Davis",
+    email: "emily.davis@acme.com",
+    department: "Engineering",
+    role: "Product Designer",
+    status: "Inactive",
+    joined: "Sep 11, 2022",
+  },
+  {
+    name: "Daniel Brooks",
+    email: "daniel.brooks@acme.com",
+    department: "Sales",
+    role: "Sales Executive",
+    status: "Active",
+    joined: "May 27, 2025",
+  },
+];
+
+const departments = [
+  "All departments",
+  "Engineering",
+  "Operations",
+  "Human Resources",
+  "Finance",
+  "Sales",
+];
+
+export default function EmployeeTable() {
+  const [search, setSearch] = useState("");
+  const [department, setDepartment] = useState("All departments");
+
+  const filteredEmployees = useMemo(() => {
+    const query = search.toLowerCase().trim();
+
+    return employees.filter((employee) => {
+      const matchesSearch =
+        !query ||
+        employee.name.toLowerCase().includes(query) ||
+        employee.email.toLowerCase().includes(query) ||
+        employee.role.toLowerCase().includes(query);
+
+      const matchesDepartment =
+        department === "All departments" ||
+        employee.department === department;
+
+      return matchesSearch && matchesDepartment;
+    });
+  }, [search, department]);
+
+  return (
+    <section className="overflow-hidden rounded-2xl border border-white/[0.07] bg-[#101113]">
+      {/* TOOLBAR */}
+      <div className="flex flex-col gap-3 border-b border-white/[0.07] p-4 md:flex-row md:items-center md:justify-between">
+        <div className="relative w-full md:max-w-[320px]">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white/25" />
+
+          <input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search employees..."
+            className="h-10 w-full rounded-xl border border-white/[0.07] bg-white/[0.025] pl-10 pr-4 text-[11px] text-white outline-none transition placeholder:text-white/25 focus:border-white/15"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <select
+            value={department}
+            onChange={(event) => setDepartment(event.target.value)}
+            className="h-10 rounded-xl border border-white/[0.07] bg-[#151619] px-3 text-[10px] text-white/55 outline-none"
+          >
+            {departments.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+
+          <button className="flex h-10 items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.025] px-3 text-[10px] text-white/50 transition hover:bg-white/[0.05] hover:text-white">
+            <Filter className="h-3.5 w-3.5" />
+            Filters
+          </button>
+
+          <button className="flex h-10 items-center gap-2 rounded-xl bg-white px-3.5 text-[10px] font-semibold text-black transition hover:bg-white/90">
+            <Plus className="h-3.5 w-3.5" />
+            Add employee
+          </button>
+        </div>
+      </div>
+
+      {/* TABLE */}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[850px] border-collapse">
+          <thead>
+            <tr className="border-b border-white/[0.06]">
+              <th className="px-5 py-3 text-left text-[9px] font-medium uppercase tracking-[0.14em] text-white/25">
+                Employee
+              </th>
+              <th className="px-4 py-3 text-left text-[9px] font-medium uppercase tracking-[0.14em] text-white/25">
+                Department
+              </th>
+              <th className="px-4 py-3 text-left text-[9px] font-medium uppercase tracking-[0.14em] text-white/25">
+                Role
+              </th>
+              <th className="px-4 py-3 text-left text-[9px] font-medium uppercase tracking-[0.14em] text-white/25">
+                Status
+              </th>
+              <th className="px-4 py-3 text-left text-[9px] font-medium uppercase tracking-[0.14em] text-white/25">
+                Joined
+              </th>
+              <th className="w-12 px-4 py-3" />
+            </tr>
+          </thead>
+
+          <tbody>
+            {filteredEmployees.map((employee) => (
+              <tr
+                key={employee.email}
+                className="group border-b border-white/[0.05] transition hover:bg-white/[0.02]"
+              >
+                <td className="px-5 py-4">
+                  <div className="flex items-center gap-3">
+                    <Avatar name={employee.name} />
+
+                    <div>
+                      <p className="text-[11px] font-medium text-white/85">
+                        {employee.name}
+                      </p>
+                      <p className="mt-0.5 text-[9px] text-white/30">
+                        {employee.email}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="px-4 py-4 text-[10px] text-white/50">
+                  {employee.department}
+                </td>
+
+                <td className="px-4 py-4 text-[10px] text-white/50">
+                  {employee.role}
+                </td>
+
+                <td className="px-4 py-4">
+                  <StatusBadge status={employee.status} />
+                </td>
+
+                <td className="px-4 py-4 text-[10px] text-white/35">
+                  {employee.joined}
+                </td>
+
+                <td className="px-4 py-4">
+                  <button className="flex h-7 w-7 items-center justify-center rounded-lg text-white/25 opacity-0 transition hover:bg-white/[0.06] hover:text-white group-hover:opacity-100">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+
+            {filteredEmployees.length === 0 && (
+              <tr>
+                <td colSpan={6} className="px-5 py-12 text-center">
+                  <p className="text-xs text-white/40">
+                    No employees found.
+                  </p>
+                  <p className="mt-1 text-[9px] text-white/20">
+                    Try changing your search or department filter.
+                  </p>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* PAGINATION */}
+      <div className="flex items-center justify-between border-t border-white/[0.06] px-5 py-3.5">
+        <p className="text-[9px] text-white/25">
+          Showing{" "}
+          <span className="text-white/50">
+            {filteredEmployees.length}
+          </span>{" "}
+          of <span className="text-white/50">1,248</span> employees
+        </p>
+
+        <div className="flex items-center gap-1">
+          <button className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/[0.06] text-white/25 transition hover:bg-white/[0.04] hover:text-white">
+            <ChevronLeft className="h-3.5 w-3.5" />
+          </button>
+
+          <button className="flex h-7 min-w-7 items-center justify-center rounded-lg bg-white px-2 text-[9px] font-semibold text-black">
+            1
+          </button>
+
+          <button className="flex h-7 min-w-7 items-center justify-center rounded-lg text-[9px] text-white/35 transition hover:bg-white/[0.04] hover:text-white">
+            2
+          </button>
+
+          <button className="flex h-7 min-w-7 items-center justify-center rounded-lg text-[9px] text-white/35 transition hover:bg-white/[0.04] hover:text-white">
+            3
+          </button>
+
+          <button className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/[0.06] text-white/25 transition hover:bg-white/[0.04] hover:text-white">
+            <ChevronRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Avatar({ name }: { name: string }) {
+  const initials = name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2);
+
+  return (
+    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[9px] font-semibold text-white/55">
+      {initials}
+    </div>
+  );
+}
+
+function StatusBadge({
+  status,
+}: {
+  status: Employee["status"];
+}) {
+  const styles = {
+    Active: "border-white/[0.08] bg-white/[0.05] text-white/60",
+    "On leave": "border-white/[0.08] bg-white/[0.025] text-white/40",
+    Inactive: "border-white/[0.06] bg-black/10 text-white/25",
+  };
+
+  return (
+    <span
+      className={`inline-flex rounded-full border px-2 py-1 text-[8px] font-medium ${styles[status]}`}
+    >
+      {status}
+    </span>
+  );
+}
+================ ALL ROUTE FILES ================
+
+================ FILE: src/app/ai-assistant/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import AIAssistant from "@/components/ai-assistant/AIAssistant";
+
+export default function AIAssistantPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                Intelligence
+              </span>
+            </div>
+
+            <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+              AI Assistant
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-white/35">
+              Ask questions, discover patterns and understand your organisation.
+            </p>
+          </div>
+
+          <AIAssistant />
+
+          <div className="flex items-center justify-between py-7 text-[9px] text-white/20">
+            <p>OrgNexus · Intelligence Layer</p>
+            <p>AI engine ready for backend integration</p>
+          </div>
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+================ FILE: src/app/attendance/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import AttendanceOverview from "@/components/attendance/AttendanceOverview";
+
+export default function AttendancePage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                Workforce
+              </span>
+            </div>
+
+            <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+              Attendance
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-white/35">
+              Monitor workforce presence, punctuality and department trends.
+            </p>
+          </div>
+
+          <AttendanceOverview />
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+
+================ FILE: src/app/departments/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import DepartmentGrid from "@/components/departments/DepartmentGrid";
+
+export default function DepartmentsPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <div className="mb-2 flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                  Organisation
+                </span>
+              </div>
+
+              <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+                Departments
+              </h1>
+
+              <p className="mt-1.5 text-[12px] text-white/35">
+                Structure your organisation and manage team ownership.
+              </p>
+            </div>
+
+            <div className="flex gap-2">
+              <Stat label="Departments" value="8" />
+              <Stat label="Employees" value="1,248" />
+              <Stat label="Avg. team size" value="156" />
+            </div>
+          </div>
+
+          <DepartmentGrid />
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] px-4 py-2.5">
+      <p className="text-[8px] uppercase tracking-[0.14em] text-white/25">
+        {label}
+      </p>
+      <p className="mt-0.5 text-sm font-semibold">{value}</p>
+    </div>
+  );
+}
+
+================ FILE: src/app/reports/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import ReportOverview from "@/components/reports/ReportOverview";
+
+export default function ReportsPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                Intelligence
+              </span>
+            </div>
+
+            <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+              Reports
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-white/35">
+              Understand workforce performance and organisation health.
+            </p>
+          </div>
+
+          <ReportOverview />
+
+          <div className="flex items-center justify-between py-7 text-[9px] text-white/20">
+            <p>OrgNexus · Reporting & Analytics</p>
+            <p>Last synced just now</p>
+          </div>
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+================ FILE: src/app/requests/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import RequestOverview from "@/components/requests/RequestOverview";
+
+export default function RequestsPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                Workflow
+              </span>
+            </div>
+
+            <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+              Requests
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-white/35">
+              Review, approve and manage employee requests.
+            </p>
+          </div>
+
+          <RequestOverview />
+
+          <div className="flex items-center justify-between py-7 text-[9px] text-white/20">
+            <p>OrgNexus · Request Management</p>
+            <p>Last synced just now</p>
+          </div>
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+================ FILE: src/app/roles/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import RolesOverview from "@/components/roles/RolesOverview";
+
+export default function RolesPage() {
+  return (
+    <AppShell>
+      <RolesOverview />
+    </AppShell>
+  );
+}
+================ FILE: src/app/settings/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import SettingsOverview from "@/components/settings/SettingsOverview";
+
+export default function SettingsPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                System
+              </span>
+            </div>
+
+            <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+              Settings
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-white/35">
+              Configure your organisation workspace and preferences.
+            </p>
+          </div>
+
+          <SettingsOverview />
+
+          <div className="flex items-center justify-between py-7 text-[9px] text-white/20">
+            <p>OrgNexus · System Settings</p>
+            <p>Configuration synced just now</p>
+          </div>
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+================ FILE: src/app/tasks/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import TaskOverview from "@/components/tasks/TaskOverview";
+
+export default function TasksPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                Productivity
+              </span>
+            </div>
+
+            <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+              Tasks
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-white/35">
+              Plan, assign and track work across your organisation.
+            </p>
+          </div>
+
+          <TaskOverview />
+
+          <div className="flex items-center justify-between py-7 text-[9px] text-white/20">
+            <p>OrgNexus · Task Management</p>
+            <p>Last synced just now</p>
+          </div>
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+================ FILE: src/app/transport/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import TransportOverview from "@/components/transport/TransportOverview";
+
+export default function TransportPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7">
+            <div className="mb-2 flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                Operations
+              </span>
+            </div>
+
+            <h1 className="text-[28px] font-semibold tracking-[-0.04em] md:text-[34px]">
+              Transport
+            </h1>
+
+            <p className="mt-1.5 text-[12px] text-white/35">
+              Monitor your fleet, routes and employee transport in real time.
+            </p>
+          </div>
+
+          <TransportOverview />
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+
+================ FILE: src/app/users/page.tsx ================
+import AppShell from "@/components/layout/AppShell";
+import EmployeeTable from "@/components/users/EmployeeTable";
+
+export default function UsersPage() {
+  return (
+    <AppShell>
+      <main className="dashboard-grid min-h-full">
+        <div className="mx-auto w-full max-w-[1700px] p-5 lg:p-7">
+          <div className="mb-7 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <div className="mb-2 flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                <span className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white/35">
+                  Organisation
+                </span>
+              </div>
+
+              <h1 className="text-[28px] font-semibold tracking-[-0.04em] text-white md:text-[34px]">
+                Employees
+              </h1>
+
+              <p className="mt-1.5 text-[12px] text-white/35">
+                Manage your organisation&apos;s people, roles and access.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <MiniStat label="Total employees" value="1,248" />
+              <MiniStat label="Active" value="1,192" />
+            </div>
+          </div>
+
+          <div className="mb-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <MiniStat label="Engineering" value="312" />
+            <MiniStat label="Operations" value="274" />
+            <MiniStat label="Human Resources" value="64" />
+            <MiniStat label="Other departments" value="598" />
+          </div>
+
+          <EmployeeTable />
+
+          <div className="flex items-center justify-between py-7 text-[9px] text-white/20">
+            <p>OrgNexus · Employee Management</p>
+            <p>Last synced just now</p>
+          </div>
+        </div>
+      </main>
+    </AppShell>
+  );
+}
+
+function MiniStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border border-white/[0.06] bg-[#101113] px-4 py-3.5">
+      <p className="text-[8px] uppercase tracking-[0.14em] text-white/25">
+        {label}
+      </p>
+      <p className="mt-0.5 text-lg font-semibold tracking-[-0.03em]">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+================ TYPESCRIPT CHECK ================
+npm notice run orgnexus@0.1.0 npx
+npm notice run 'tsc' --noEmit
+
+================ PRODUCTION BUILD ================
+npm notice run orgnexus@0.1.0 build
+npm notice run next build
+▲ Next.js 16.3.4 (Turbopack)
+✓ Running next.config.ts took 14ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 292ms
+  Running TypeScript ...
+  Finished TypeScript in 761ms ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/14) ...
+  Generating static pages using 15 workers (3/14) 
+  Generating static pages using 15 workers (6/14) 
+  Generating static pages using 15 workers (10/14) 
+✓ Generating static pages using 15 workers (14/14) in 373ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /ai-assistant
+├ ○ /attendance
+├ ○ /departments
+├ ○ /reports
+├ ○ /requests
+├ ○ /roles
+├ ○ /settings
+├ ○ /tasks
+├ ○ /transport
+└ ○ /users
+
+
+○  (Static)  prerendered as static content
+
+
+================ END AUDIT ================

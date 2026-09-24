@@ -6,6 +6,7 @@ import {
   Check,
   FileText,
   LayoutDashboard,
+  Megaphone,
   PanelLeftClose,
   Settings,
   ShieldCheck,
@@ -24,6 +25,7 @@ const navigation = [
   { label: "Transport", icon: Bus, path: "/transport" },
   { label: "Tasks", icon: Check, path: "/tasks" },
   { label: "Requests", icon: FileText, path: "/requests" },
+  { label: "Notices", icon: Megaphone, path: "/notices" },
   { label: "Reports", icon: Activity, path: "/reports" },
 ];
 

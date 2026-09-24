@@ -11,94 +11,70 @@ import {
   Search,
   Plus,
   ChevronRight,
+  Globe,
+  Building2,
+  User,
 } from "lucide-react";
+import type { Permission } from "@/lib/types/entities";
+import type { RoleWithCounts } from "@/lib/data/roles";
 
-type Role = {
-  name: string;
-  description: string;
-  users: number;
-  permissions: number;
-  color: string;
-  system?: boolean;
+interface RolesOverviewProps {
+  roles: RoleWithCounts[];
+  permissions: Permission[];
+}
+
+const ROLE_COLORS = ["bg-white", "bg-blue-400", "bg-violet-400", "bg-amber-400"];
+
+const SCOPE_META = {
+  global: { label: "Global", icon: Globe, hint: "Applies org-wide" },
+  department: { label: "Department", icon: Building2, hint: "Own department only" },
+  self: { label: "Self", icon: User, hint: "Own records only" },
+} as const;
+
+// Groups permission keys by their prefix for display, e.g. "users.read" -> "People"
+const GROUP_LABELS: Record<string, string> = {
+  users: "People",
+  departments: "Organisation",
+  attendance: "Attendance",
+  transport: "Transport",
+  tasks: "Tasks",
+  requests: "Requests",
+  reports: "Reports",
+  settings: "Settings",
 };
 
-const roles: Role[] = [
-  {
-    name: "Super Admin",
-    description: "Full system access and organisation control",
-    users: 2,
-    permissions: 42,
-    color: "bg-white",
-    system: true,
-  },
-  {
-    name: "HR Manager",
-    description: "Manage employees, attendance and requests",
-    users: 8,
-    permissions: 31,
-    color: "bg-blue-400",
-  },
-  {
-    name: "Department Head",
-    description: "Manage department employees and operations",
-    users: 14,
-    permissions: 24,
-    color: "bg-violet-400",
-  },
-  {
-    name: "Transport Manager",
-    description: "Manage routes, buses and transport operations",
-    users: 5,
-    permissions: 18,
-    color: "bg-emerald-400",
-  },
-  {
-    name: "Team Lead",
-    description: "Manage assigned teams and tasks",
-    users: 27,
-    permissions: 16,
-    color: "bg-amber-400",
-  },
-  {
-    name: "Employee",
-    description: "Standard employee access",
-    users: 1192,
-    permissions: 9,
-    color: "bg-white/50",
-  },
-];
+function groupPermissions(permissions: Permission[]) {
+  const groups = new Map<string, Permission[]>();
+  for (const perm of permissions) {
+    const prefix = perm.key.split(".")[0];
+    const label = GROUP_LABELS[prefix] ?? prefix;
+    if (!groups.has(label)) groups.set(label, []);
+    groups.get(label)!.push(perm);
+  }
+  return Array.from(groups.entries()).map(([title, items]) => ({ title, items }));
+}
 
-const permissionGroups = [
-  {
-    title: "Organisation",
-    items: ["View organisation", "Manage departments", "Manage roles"],
-  },
-  {
-    title: "People",
-    items: ["View employees", "Add employees", "Edit employees", "Delete employees"],
-  },
-  {
-    title: "Operations",
-    items: ["View attendance", "Manage transport", "Manage tasks", "Manage requests"],
-  },
-  {
-    title: "Reports",
-    items: ["View reports", "Export reports"],
-  },
-];
-
-export default function RolesOverview() {
-  const [selectedRole, setSelectedRole] = useState("Super Admin");
+export default function RolesOverview({ roles, permissions }: RolesOverviewProps) {
+  const [selectedRoleId, setSelectedRoleId] = useState(roles[0]?.id ?? "");
   const [search, setSearch] = useState("");
 
   const filteredRoles = roles.filter(
     (role) =>
       role.name.toLowerCase().includes(search.toLowerCase()) ||
-      role.description.toLowerCase().includes(search.toLowerCase())
+      SCOPE_META[role.scope].label.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const activeRole =
-    roles.find((role) => role.name === selectedRole) ?? roles[0];
+  const activeRole = roles.find((role) => role.id === selectedRoleId) ?? roles[0];
+  const permissionGroups = groupPermissions(permissions);
+  const totalAssignedUsers = roles.reduce((sum, r) => sum + r.assignedUserCount, 0);
+
+  if (!activeRole) {
+    return (
+      <main className="flex min-h-full items-center justify-center bg-[#090a0c] p-7 text-white/40">
+        <p className="text-xs">No roles found. Run the seed script to create Admin, Dean, HOD and Student roles.</p>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-full bg-[#090a0c]">
@@ -131,19 +107,19 @@ export default function RolesOverview() {
           <Metric
             icon={<Shield size={15} />}
             label="Total roles"
-            value="6"
-            detail="2 system roles"
+            value={String(roles.length)}
+            detail={`${roles.filter((r) => r.isSystemRole).length} system roles`}
           />
           <Metric
             icon={<Users size={15} />}
             label="Assigned users"
-            value="1,248"
-            detail="100% coverage"
+            value={totalAssignedUsers.toLocaleString()}
+            detail="Active logins"
           />
           <Metric
             icon={<Lock size={15} />}
             label="Permissions"
-            value="42"
+            value={String(permissions.length)}
             detail="Across all modules"
           />
         </div>
@@ -169,13 +145,15 @@ export default function RolesOverview() {
             </div>
 
             <div className="p-2">
-              {filteredRoles.map((role) => {
-                const active = selectedRole === role.name;
+              {filteredRoles.map((role, index) => {
+                const active = selectedRoleId === role.id;
+                const color = ROLE_COLORS[index % ROLE_COLORS.length];
+                const ScopeIcon = SCOPE_META[role.scope].icon;
 
                 return (
                   <button
-                    key={role.name}
-                    onClick={() => setSelectedRole(role.name)}
+                    key={role.id}
+                    onClick={() => setSelectedRoleId(role.id)}
                     className={`group flex w-full items-center gap-3 rounded-lg p-3 text-left transition ${
                       active
                         ? "bg-white/[0.07]"
@@ -183,15 +161,11 @@ export default function RolesOverview() {
                     }`}
                   >
                     <span
-                      className={`h-8 w-8 shrink-0 rounded-lg ${role.color} flex items-center justify-center`}
+                      className={`h-8 w-8 shrink-0 rounded-lg ${color} flex items-center justify-center`}
                     >
                       <Shield
                         size={14}
-                        className={
-                          role.color === "bg-white"
-                            ? "text-black"
-                            : "text-black/70"
-                        }
+                        className={color === "bg-white" ? "text-black" : "text-black/70"}
                       />
                     </span>
 
@@ -201,15 +175,20 @@ export default function RolesOverview() {
                           {role.name}
                         </span>
 
-                        {role.system && (
+                        {role.isSystemRole && (
                           <span className="rounded-full border border-white/10 px-1.5 py-0.5 text-[8px] uppercase tracking-wider text-white/30">
                             System
                           </span>
                         )}
+
+                        <span className="flex items-center gap-1 rounded-full border border-white/10 px-1.5 py-0.5 text-[8px] uppercase tracking-wider text-white/30">
+                          <ScopeIcon size={8} />
+                          {SCOPE_META[role.scope].label}
+                        </span>
                       </span>
 
                       <span className="mt-0.5 block truncate text-[10px] text-white/30">
-                        {role.users} users · {role.permissions} permissions
+                        {role.assignedUserCount} users · {role.permissionIds.length} permissions
                       </span>
                     </span>
 
@@ -241,7 +220,7 @@ export default function RolesOverview() {
                       {activeRole.name}
                     </h2>
 
-                    {activeRole.system && (
+                    {activeRole.isSystemRole && (
                       <span className="rounded-full bg-white/[0.07] px-2 py-0.5 text-[8px] uppercase tracking-wider text-white/35">
                         Protected
                       </span>
@@ -249,7 +228,7 @@ export default function RolesOverview() {
                   </div>
 
                   <p className="mt-0.5 text-[10px] text-white/30">
-                    {activeRole.description}
+                    {SCOPE_META[activeRole.scope].hint}
                   </p>
                 </div>
               </div>
@@ -257,7 +236,7 @@ export default function RolesOverview() {
               <div className="flex items-center gap-2">
                 <button className="flex h-8 items-center gap-2 rounded-lg border border-white/[0.08] px-3 text-[10px] text-white/50 transition hover:bg-white/[0.04] hover:text-white">
                   <Users size={13} />
-                  {activeRole.users} users
+                  {activeRole.assignedUserCount} users
                 </button>
 
                 <button className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] text-white/40 transition hover:bg-white/[0.04] hover:text-white">
@@ -273,12 +252,16 @@ export default function RolesOverview() {
                     Permissions
                   </h3>
                   <p className="mt-1 text-[10px] text-white/25">
-                    Configure what this role can access.
+                    {activeRole.scope === "department"
+                      ? "Enabled permissions apply only within this role's own department."
+                      : activeRole.scope === "self"
+                        ? "Enabled permissions apply only to this user's own records."
+                        : "Enabled permissions apply organisation-wide."}
                   </p>
                 </div>
 
                 <span className="text-[10px] text-white/30">
-                  {activeRole.permissions} enabled
+                  {activeRole.permissionIds.length} enabled
                 </span>
               </div>
 
@@ -295,20 +278,28 @@ export default function RolesOverview() {
                     </div>
 
                     <div className="grid grid-cols-1 divide-y divide-white/[0.05] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-                      {group.items.map((permission) => (
-                        <div
-                          key={permission}
-                          className="flex items-center justify-between px-4 py-3"
-                        >
-                          <span className="text-[11px] text-white/55">
-                            {permission}
-                          </span>
+                      {group.items.map((permission) => {
+                        const enabled = activeRole.permissionIds.includes(permission.id);
 
-                          <span className="flex h-5 w-5 items-center justify-center rounded-md bg-white/[0.07]">
-                            <Check size={11} className="text-white/70" />
-                          </span>
-                        </div>
-                      ))}
+                        return (
+                          <div
+                            key={permission.id}
+                            className="flex items-center justify-between px-4 py-3"
+                          >
+                            <span className={`text-[11px] ${enabled ? "text-white/55" : "text-white/25"}`}>
+                              {permission.label}
+                            </span>
+
+                            <span
+                              className={`flex h-5 w-5 items-center justify-center rounded-md ${
+                                enabled ? "bg-white/[0.07]" : "bg-white/[0.02]"
+                              }`}
+                            >
+                              {enabled && <Check size={11} className="text-white/70" />}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 ))}
@@ -318,7 +309,7 @@ export default function RolesOverview() {
                 <div className="flex items-center gap-2">
                   <UserPlus size={14} className="text-white/30" />
                   <span className="text-[10px] text-white/40">
-                    {activeRole.users} users have this role
+                    {activeRole.assignedUserCount} users have this role
                   </span>
                 </div>
 
